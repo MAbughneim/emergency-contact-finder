@@ -5,136 +5,208 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        body{
+        body {
             font-family: Arial, sans-serif;
             max-width: 600px;
             margin: 40px auto;
             padding: 20px;
-            text-align:center;
+            text-align: center;
         }
 
-        input{
-            width:100%;
-            padding:12px;
-            margin:10px 0;
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
         }
 
-        button{
-            background:#0078D4;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            cursor:pointer;
-            border-radius:4px;
+        button {
+            background: #0078D4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 4px;
         }
 
-        #mainSection{
-            display:none;
+        button:hover {
+            background: #005a9e;
+        }
+
+        #mainSection {
+            display: none;
+        }
+
+        .location {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
     </style>
 </head>
 
 <body>
 
-<h1>🏥 Medical Emergency Information</h1>
+    <h1>🏥 Medical Emergency Information</h1>
 
-<div id="loginSection">
+    <div id="loginSection">
 
-    <p>Enter Company Access Code</p>
+        <p>Enter Company Access Code</p>
 
-    <input type="password" id="password">
+        <input
+            type="password"
+            id="password"
+            placeholder="Access Code"
+        >
 
-    <button onclick="login()">Continue</button>
+        <button onclick="login()">Continue</button>
 
-</div>
+    </div>
 
-<div id="mainSection">
+    <div id="mainSection">
 
-    <h2>Welcome</h2>
+        <h2>Welcome</h2>
 
-    <button onclick="getLocation()">Use My Location</button>
+        <button onclick="getLocation()">📍 Use My Location</button>
 
-    <br><br>
+        <br><br>
 
-    <select>
-        <option>Select Town</option>
-        <option>Bloomfield</option>
-        <option>Hartford</option>
-        <option>Manchester</option>
-        <option>New Britain</option>
-    </select>
+        <select id="townSelect">
+            <option value="">Select Town</option>
+            <option value="Bloomfield">Bloomfield</option>
+            <option value="Hartford">Hartford</option>
+            <option value="Manchester">Manchester</option>
+            <option value="New Britain">New Britain</option>
+        </select>
 
-    <div id="results"></div>
+        <div id="results"></div>
 
-</div>
+    </div>
 
-<script>
+    <!-- Your locations.js file -->
+    <script src="locations.js"></script>
 
-function login(){
+    <script>
 
-    const password = document.getElementById("password").value;
+        function login() {
 
-    if(password === "EC2026"){
-        document.getElementById("loginSection").style.display="none";
-        document.getElementById("mainSection").style.display="block";
-    }
-    else{
-        alert("Invalid Access Code");
-    }
-}
+            const password =
+                document.getElementById("password").value;
 
-function getLocation() {
+            if (password === "EC2026") {
 
-    navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById("loginSection").style.display = "none";
 
-        const userLat = position.coords.latitude;
-        const userLon = position.coords.longitude;
+                document.getElementById("mainSection").style.display = "block";
 
-        const results = [];
+            } else {
 
-        locations.forEach(function(location) {
+                alert("Invalid Access Code");
 
-            const distance =
-                Math.sqrt(
-                    Math.pow(userLat - location.latitude, 2) +
-                    Math.pow(userLon - location.longitude, 2)
-                );
+            }
+        }
 
-            results.push({
-                ...location,
-                distance: distance
-            });
 
-        });
+        function getLocation() {
 
-        results.sort((a, b) => a.distance - b.distance);
+            if (!navigator.geolocation) {
 
-        const nearest = results.slice(0, 3);
+                alert("Your browser does not support location services.");
+                return;
 
-        let html = "<h3>Closest Locations</h3>";
+            }
 
-        nearest.forEach(function(location) {
+            navigator.geolocation.getCurrentPosition(
 
-            html += `
-                <div style="margin-bottom:20px;padding:10px;border:1px solid #ccc;">
-                    <strong>${location.name}</strong><br>
-                    ${location.type}<br>
-                    ${location.town}<br>
-                    📞 ${location.phone}<br>
-                    ${location.website}Open Website</a>
-                </div>
-            `;
-        });
+                function(position) {
 
-        document.getElementById("results").innerHTML = html;
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;
 
-    });
+                    const results = [];
 
-}
+                    locations.forEach(function(location) {
 
-</script>
+                        const distance =
+                            Math.sqrt(
+                                Math.pow(
+                                    userLat - location.latitude,
+                                    2
+                                ) +
+                                Math.pow(
+                                    userLon - location.longitude,
+                                    2
+                                )
+                            );
 
-locations.jsscript>
+                        results.push({
+                            ...location,
+                            distance: distance
+                        });
+
+                    });
+
+
+                    results.sort(function(a, b) {
+                        return a.distance - b.distance;
+                    });
+
+
+                    const nearest = results.slice(0, 3);
+
+                    let html = "<h3>Closest Locations</h3>";
+
+
+                    nearest.forEach(function(location) {
+
+                        html += `
+                            <div class="location">
+
+                                <strong>${location.name}</strong>
+                                <br>
+
+                                ${location.type}
+                                <br>
+
+                                ${location.town}
+                                <br>
+
+                                📞 ${location.phone}
+                                <br><br>
+
+                                <a
+                                    href="${location.website}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    🌐 Open Website
+                                </a>
+
+                            </div>
+                        `;
+
+                    });
+
+
+                    document.getElementById("results").innerHTML = html;
+
+                },
+
+                function(error) {
+
+                    alert(
+                        "Unable to get your location. " +
+                        "Please allow location access."
+                    );
+
+                }
+
+            );
+
+        }
+
+    </script>
 
 </body>
 </html>
