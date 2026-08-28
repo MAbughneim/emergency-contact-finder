@@ -371,13 +371,13 @@ function getLocation() {
 
             // Calculate distance to every location
 
-            const results = locations
-                .filter(function(location) {
+          .filter(function(location) {
 
-                    return typeof location.latitude === "number" &&
-                           typeof location.longitude === "number";
+    return !isNaN(parseFloat(location.latitude)) &&
+           !isNaN(parseFloat(location.longitude));
 
-                })
+})
+
                 .map(function(location) {
 
                     const R = 3958.8; // Earth radius in miles
