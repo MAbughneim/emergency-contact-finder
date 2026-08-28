@@ -371,12 +371,15 @@ function getLocation() {
 
             // Calculate distance to every location
 
-          .filter(function(location) {
+  const results = locations
+.filter(function(location) {
 
     return !isNaN(parseFloat(location.latitude)) &&
            !isNaN(parseFloat(location.longitude));
 
 })
+.map(function(location) {
+
 
                 .map(function(location) {
 
@@ -436,12 +439,25 @@ function getLocation() {
 
             // Get closest 4
 
-            const nearest = results.slice(0, 4);
+          const urgentCares = results
+    .filter(x => x.type === "Urgent Care")
+    .slice(0, 2);
 
+const emergencyRooms = results
+    .filter(x => x.type === "Emergency Room")
+    .slice(0, 2);
 
-            let html = `
-                <h3>📍 4 Closest Medical Locations</h3>
-            `;
+const nearest = [
+    ...urgentCares,
+    ...emergencyRooms
+];
+
+let html = `
+    <h3>📍 Closest Emergency Locations</h3>
+
+    <h4>Urgent Care</h4>
+`;
+
 
 
             if (nearest.length === 0) {
