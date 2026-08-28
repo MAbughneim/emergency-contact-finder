@@ -390,8 +390,18 @@
 
                     // Get 3 closest
 
-                    const nearest =
-                        results.slice(0, 3);
+                  const urgentCares = results
+    .filter(x => x.type === "Urgent Care")
+    .slice(0, 2);
+
+const emergencyRooms = results
+    .filter(x => x.type === "Emergency Room")
+    .slice(0, 2);
+
+const nearest = [
+    ...urgentCares,
+    ...emergencyRooms
+];
 
 
                     let html =
