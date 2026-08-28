@@ -132,475 +132,468 @@
     </div>
 
 
-    <!-- LOAD LOCATIONS.JS ONCE -->
+   <!-- LOAD LOCATIONS.JS ONCE -->
 
-    <script src="locations.js"></script>
+<script src="locations.js"></script>
+
+<script>
+
+    // =====================================
+    // LOGIN
+    // =====================================
+
+    function login() {
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const password =
+            passwordInput.value;
+
+        if (password === "EC2026") {
+
+            document.getElementById("loginSection").style.display = "none";
+
+            document.getElementById("mainSection").style.display = "block";
+
+        } else {
+
+            alert("Invalid Access Code");
+
+        }
+    }
 
 
-    <script>
+    // =====================================
+    // CHECK LOCATIONS FILE
+    // =====================================
 
-        // =====================================
-        // LOGIN
-        // =====================================
-function login() {
-    alert("Login button clicked");
+    if (typeof locations === "undefined") {
 
-    const password =
-        document.getElementById("password").value;
-
-    if (password === "EC2026") {
-
-        document.getElementById("loginSection").style.display = "none";
-
-        document.getElementById("mainSection").style.display = "block";
-
-    } else {
-
-        alert("Invalid Access Code");
+        document.getElementById("results").innerHTML =
+            "<p class='error'>ERROR: locations.js was not loaded.</p>";
 
     }
-}
 
 
+    // =====================================
+    // CREATE TOWN DROPDOWN
+    // =====================================
 
-        // =====================================
-        // CHECK LOCATIONS FILE
-        // =====================================
+    const townSelect =
+        document.getElementById("townSelect");
 
-        if (typeof locations === "undefined") {
 
-            document.getElementById("results").innerHTML =
-                "<p class='error'>ERROR: locations.js was not loaded.</p>";
+    if (typeof locations !== "undefined") {
+
+        const towns = [
+            ...new Set(
+                locations.map(function(location) {
+                    return location.town;
+                })
+            )
+        ].sort();
+
+
+        towns.forEach(function(town) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = town;
+
+            option.textContent = town;
+
+            townSelect.appendChild(option);
+
+        });
+
+    }
+
+
+    // =====================================
+    // TOWN SELECTED
+    // =====================================
+
+    townSelect.addEventListener("change", function() {
+
+        const selectedTown = this.value;
+
+        const results =
+            document.getElementById("results");
+
+
+        if (selectedTown === "") {
+
+            results.innerHTML = "";
+
+            return;
 
         }
 
 
-        // =====================================
-        // CREATE TOWN DROPDOWN
-        // =====================================
+        const townLocations =
+            locations.filter(function(location) {
 
-        const townSelect =
-            document.getElementById("townSelect");
-
-
-        if (typeof locations !== "undefined") {
-
-            const towns = [
-                ...new Set(
-                    locations.map(function(location) {
-                        return location.town;
-                    })
-                )
-            ].sort();
-
-
-            towns.forEach(function(town) {
-
-                const option =
-                    document.createElement("option");
-
-                option.value = town;
-
-                option.textContent = town;
-
-                townSelect.appendChild(option);
-
-            });
-
-        }
-
-
-        // =====================================
-        // TOWN SELECTED
-        // =====================================
-
-        townSelect.addEventListener("change", function() {
-
-            const selectedTown = this.value;
-
-            const results =
-                document.getElementById("results");
-
-
-            if (selectedTown === "") {
-
-                results.innerHTML = "";
-
-                return;
-
-            }
-
-
-            if (typeof locations === "undefined") {
-
-                results.innerHTML =
-                    "<p class='error'>locations.js is not loaded.</p>";
-
-                return;
-
-            }
-
-
-            // FIND ALL LOCATIONS IN TOWN
-
-            const townLocations =
-                locations.filter(function(location) {
-
-                    return location.town.toLowerCase() ===
-                           selectedTown.toLowerCase();
-
-                });
-
-
-            let html =
-                "<h3>📍 Locations in " +
-                selectedTown +
-                "</h3>";
-
-
-            if (townLocations.length === 0) {
-
-                html +=
-                    "<p>No locations found.</p>";
-
-            }
-
-
-            // DISPLAY EVERY LOCATION
-
-            townLocations.forEach(function(location) {
-
-                html += `
-
-                    <div class="location">
-
-                        <strong>
-                            ${location.name}
-                        </strong>
-
-                        <br><br>
-
-                        🏥 ${location.type}
-
-                        <br><br>
-
-                        📍 ${location.address}
-
-                        <br><br>
-
-                        📞
-                        <a href="tel:${location.phone}">
-                            ${location.phone}
-                        </a>
-
-                        <br><br>
-
-                        <a
-                            href="${location.website}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            🌐 Open Website
-                        </a>
-
-                    </div>
-
-                `;
+                return location.town.toLowerCase() ===
+                       selectedTown.toLowerCase();
 
             });
 
 
-            results.innerHTML = html;
+        let html =
+            "<h3>📍 Locations in " +
+            selectedTown +
+            "</h3>";
+
+
+        townLocations.forEach(function(location) {
+
+            html += `
+
+                <div class="location">
+
+                    <strong>
+                        ${location.name}
+                    </strong>
+
+                    <br><br>
+
+                    🏥 ${location.type}
+
+                    <br><br>
+
+                    📍 ${location.address}
+
+                    <br><br>
+
+                    📞
+                    <a href="tel:${location.phone}">
+                        ${location.phone}
+                    </a>
+
+                    <br><br>
+
+                    <a
+                        href="${location.website}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🌐 Open Website
+                    </a>
+
+                </div>
+
+            `;
 
         });
 
 
-        // =====================================
-        // USE MY LOCATION
-        // =====================================
+        results.innerHTML = html;
 
-function getLocation() {
+    });
 
-    const resultsDiv = document.getElementById("results");
 
-    if (!navigator.geolocation) {
+    // =====================================
+    // USE MY LOCATION
+    // =====================================
+
+    function getLocation() {
+
+        const resultsDiv =
+            document.getElementById("results");
+
+
+        if (!navigator.geolocation) {
+
+            resultsDiv.innerHTML = `
+                <p class="error">
+                    Your browser does not support location services.
+                </p>
+            `;
+
+            return;
+        }
+
+
         resultsDiv.innerHTML = `
-            <p class="error">
-                Your browser does not support location services.
-            </p>
+            <h3>📍 Finding locations near you...</h3>
+            <p>Please wait...</p>
         `;
-        return;
-    }
-
-    if (typeof locations === "undefined") {
-        resultsDiv.innerHTML = `
-            <p class="error">
-                ERROR: locations.js was not loaded.
-            </p>
-        `;
-        return;
-    }
-
-    if (!Array.isArray(locations) || locations.length === 0) {
-        resultsDiv.innerHTML = `
-            <p class="error">
-                ERROR: There are no locations in locations.js.
-            </p>
-        `;
-        return;
-    }
-
-    resultsDiv.innerHTML = `
-        <h3>📍 Finding locations near you...</h3>
-        <p>Please wait...</p>
-    `;
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            const userLat = position.coords.latitude;
-            const userLon = position.coords.longitude;
-
-            console.log("Your latitude:", userLat);
-            console.log("Your longitude:", userLon);
-            console.log("Locations:", locations);
 
 
-            // Calculate distance to every location
+        navigator.geolocation.getCurrentPosition(
 
-  const results = locations
-.filter(function(location) {
+            function(position) {
 
-    return !isNaN(parseFloat(location.latitude)) &&
-           !isNaN(parseFloat(location.longitude));
+                const userLat =
+                    position.coords.latitude;
 
-})
-.map(function(location) {
-
-
-                .map(function(location) {
-
-                    const R = 3958.8; // Earth radius in miles
-
-                    const lat1 =
-                        userLat * Math.PI / 180;
-
-                    const lat2 =
-                        location.latitude * Math.PI / 180;
-
-                    const dLat =
-                        (location.latitude - userLat)
-                        * Math.PI / 180;
-
-                    const dLon =
-                        (location.longitude - userLon)
-                        * Math.PI / 180;
+                const userLon =
+                    position.coords.longitude;
 
 
-                    const a =
-                        Math.sin(dLat / 2) *
-                        Math.sin(dLat / 2) +
+                // CALCULATE DISTANCES
 
-                        Math.cos(lat1) *
-                        Math.cos(lat2) *
-                        Math.sin(dLon / 2) *
-                        Math.sin(dLon / 2);
+                const results = locations
 
+                    .filter(function(location) {
 
-                    const c =
-                        2 * Math.atan2(
-                            Math.sqrt(a),
-                            Math.sqrt(1 - a)
+                        return !isNaN(
+                            parseFloat(location.latitude)
+                        ) &&
+                        !isNaN(
+                            parseFloat(location.longitude)
                         );
 
+                    })
 
-                    const distance = R * c;
+                    .map(function(location) {
+
+                        const R = 3958.8;
+
+                        const lat1 =
+                            userLat * Math.PI / 180;
+
+                        const lat2 =
+                            location.latitude * Math.PI / 180;
+
+                        const dLat =
+                            (location.latitude - userLat)
+                            * Math.PI / 180;
+
+                        const dLon =
+                            (location.longitude - userLon)
+                            * Math.PI / 180;
 
 
-                    return {
-                        ...location,
-                        distance: distance
-                    };
+                        const a =
+                            Math.sin(dLat / 2) *
+                            Math.sin(dLat / 2) +
+
+                            Math.cos(lat1) *
+                            Math.cos(lat2) *
+                            Math.sin(dLon / 2) *
+                            Math.sin(dLon / 2);
+
+
+                        const c =
+                            2 * Math.atan2(
+                                Math.sqrt(a),
+                                Math.sqrt(1 - a)
+                            );
+
+
+                        return {
+                            ...location,
+                            distance: R * c
+                        };
+
+                    });
+
+
+                // SORT CLOSEST FIRST
+
+                results.sort(function(a, b) {
+
+                    return a.distance - b.distance;
 
                 });
 
 
-            // Sort closest first
+                // GET CLOSEST 2 OF EACH
 
-            results.sort(function(a, b) {
-
-                return a.distance - b.distance;
-
-            });
-
-
-            // Get closest 4
-
-          const urgentCares = results
-    .filter(x => x.type === "Urgent Care")
-    .slice(0, 2);
-
-const emergencyRooms = results
-    .filter(x => x.type === "Emergency Room")
-    .slice(0, 2);
-
-const nearest = [
-    ...urgentCares,
-    ...emergencyRooms
-];
-
-let html = `
-    <h3>📍 Closest Emergency Locations</h3>
-
-    <h4>Urgent Care</h4>
-`;
+                const urgentCares =
+                    results
+                        .filter(function(location) {
+                            return location.type === "Urgent Care";
+                        })
+                        .slice(0, 2);
 
 
+                const emergencyRooms =
+                    results
+                        .filter(function(location) {
+                            return location.type === "Emergency Room";
+                        })
+                        .slice(0, 2);
 
-            if (nearest.length === 0) {
 
-                html += `
-                    <p class="error">
-                        No locations with valid coordinates were found.
-                    </p>
+                let html = `
+                    <h3>📍 Closest Emergency Locations</h3>
                 `;
 
+
+                // URGENT CARE
+
+                if (urgentCares.length > 0) {
+
+                    html += "<h4>Urgent Care</h4>";
+
+                    urgentCares.forEach(function(location) {
+
+                        html += `
+
+                            <div class="location">
+
+                                <strong>
+                                    ${location.name}
+                                </strong>
+
+                                <br><br>
+
+                                🏥 ${location.type}
+
+                                <br><br>
+
+                                📍 ${location.address}
+
+                                <br><br>
+
+                                📏
+                                ${location.distance.toFixed(1)}
+                                miles away
+
+                                <br><br>
+
+                                📞
+                                <a href="tel:${location.phone}">
+                                    ${location.phone}
+                                </a>
+
+                                <br><br>
+
+                                <a
+                                    href="${location.website}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    🌐 Open Website
+                                </a>
+
+                            </div>
+
+                        `;
+
+                    });
+
+                }
+
+
+                // EMERGENCY ROOMS
+
+                if (emergencyRooms.length > 0) {
+
+                    html += "<h4>Emergency Rooms</h4>";
+
+                    emergencyRooms.forEach(function(location) {
+
+                        html += `
+
+                            <div class="location">
+
+                                <strong>
+                                    ${location.name}
+                                </strong>
+
+                                <br><br>
+
+                                🏥 ${location.type}
+
+                                <br><br>
+
+                                📍 ${location.address}
+
+                                <br><br>
+
+                                📏
+                                ${location.distance.toFixed(1)}
+                                miles away
+
+                                <br><br>
+
+                                📞
+                                <a href="tel:${location.phone}">
+                                    ${location.phone}
+                                </a>
+
+                                <br><br>
+
+                                <a
+                                    href="${location.website}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    🌐 Open Website
+                                </a>
+
+                            </div>
+
+                        `;
+
+                    });
+
+                }
+
+
+                resultsDiv.innerHTML = html;
+
+            },
+
+
+            function(error) {
+
+                if (error.code === 1) {
+
+                    resultsDiv.innerHTML = `
+                        <p class="error">
+                            📍 Location permission was denied.
+                            Please allow location access and try again.
+                        </p>
+                    `;
+
+                } else if (error.code === 2) {
+
+                    resultsDiv.innerHTML = `
+                        <p class="error">
+                            📍 Your location could not be determined.
+                            Please try again.
+                        </p>
+                    `;
+
+                } else if (error.code === 3) {
+
+                    resultsDiv.innerHTML = `
+                        <p class="error">
+                            📍 Location request timed out.
+                            Please try again.
+                        </p>
+                    `;
+
+                } else {
+
+                    resultsDiv.innerHTML = `
+                        <p class="error">
+                            📍 Unable to get your location.
+                        </p>
+                    `;
+
+                }
+
+            },
+
+
+            {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 0
             }
 
+        );
 
-  html += "<h4>Urgent Care</h4>";
+    }
 
-urgentCares.forEach(function(location) {
-
-    html += `
-        <div class="location">
-
-            <strong>${location.name}</strong>
-
-            <br><br>
-
-            📍 ${location.address}
-
-            <br><br>
-
-            📏 ${location.distance.toFixed(1)} miles away
-
-            <br><br>
-
-            📞
-            tel:${location.phone}
-                ${location.phone}
-            </a>
-
-            <br><br>
-
-            ${location.website}
-                🌐 Open Website
-            </a>
-
-        </div>
-    `;
-});
-
-html += "<h4>Emergency Rooms</h4>";
-
-emergencyRooms.forEach(function(location) {
-
-    html += `
-        <div class="location">
-
-            <strong>${location.name}</strong>
-
-            <br><br>
-
-            📍 ${location.address}
-
-            <br><br>
-
-            📏 ${location.distance.toFixed(1)} miles away
-
-            <br><br>
-
-            📞
-            tel:${location.phone}
-                ${location.phone}
-            </a>
-
-            <br><br>
-
-            ${location.website}
-                🌐 Open Website
-            </a>
-
-        </div>
-    `;
-});
-
-
-            resultsDiv.innerHTML = html;
-
-        },
-
-
-        function(error) {
-
-            if (error.code === 1) {
-
-                resultsDiv.innerHTML = `
-                    <p class="error">
-                        📍 Location permission was denied.
-                        Please allow location access and try again.
-                    </p>
-                `;
-
-            }
-
-            else if (error.code === 2) {
-
-                resultsDiv.innerHTML = `
-                    <p class="error">
-                        📍 Your location could not be determined.
-                        Please try again.
-                    </p>
-                `;
-
-            }
-
-            else if (error.code === 3) {
-
-                resultsDiv.innerHTML = `
-                    <p class="error">
-                        📍 Location request timed out.
-                        Please try again.
-                    </p>
-                `;
-
-            }
-
-            else {
-
-                resultsDiv.innerHTML = `
-                    <p class="error">
-                        📍 Unable to get your location.
-                    </p>
-                `;
-
-            }
-
-        },
-
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
-        }
-
-    );
-}
-
-    </script>
+</script>
 
 </body>
-
 </html>
