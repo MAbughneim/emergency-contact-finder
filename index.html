@@ -14,6 +14,7 @@
             margin: 40px auto;
             padding: 20px;
             text-align: center;
+            background: #ffffff;
         }
 
         h1 {
@@ -82,7 +83,10 @@
     <h1>🏥 Medical Emergency Information</h1>
 
 
+    <!-- ========================= -->
     <!-- LOGIN -->
+    <!-- ========================= -->
+
     <div id="loginSection">
 
         <p>Enter Company Access Code</p>
@@ -100,13 +104,17 @@
     </div>
 
 
-    <!-- MAIN PAGE -->
+    <!-- ========================= -->
+    <!-- MAIN SECTION -->
+    <!-- ========================= -->
+
     <div id="mainSection">
 
         <h2>Welcome</h2>
 
 
-        <!-- LOCATION BUTTON -->
+        <!-- USE MY LOCATION -->
+
         <button onclick="getLocation()">
             📍 Use My Location
         </button>
@@ -115,141 +123,36 @@
         <br><br>
 
 
-        <!-- TOWN -->
-      // ==========================================
-// AUTOMATICALLY CREATE TOWN DROPDOWN
-// ==========================================
+        <!-- TOWN DROPDOWN -->
 
-const townSelect = document.getElementById("townSelect");
+        <select id="townSelect">
 
-// Get unique towns from locations
-const towns = [...new Set(
-    locations.map(location => location.town)
-)].sort();
+            <option value="">
+                Select Town
+            </option>
 
-// Add towns to dropdown
-towns.forEach(function(town) {
-
-    const option = document.createElement("option");
-
-    option.value = town;
-    option.textContent = town;
-
-    townSelect.appendChild(option);
-
-});
-
-
-// ==========================================
-// SHOW LOCATIONS WHEN TOWN IS SELECTED
-// ==========================================
-
-townSelect.addEventListener("change", function() {
-
-    const selectedTown = this.value;
-
-    const resultsDiv =
-        document.getElementById("results");
-
-    if (!selectedTown) {
-
-        resultsDiv.innerHTML = "";
-
-        return;
-    }
-
-
-    // Find ALL locations in selected town
-
-    const townLocations = locations.filter(function(location) {
-
-        return location.town.toLowerCase() ===
-               selectedTown.toLowerCase();
-
-    });
-
-
-    let html =
-        `<h3>📍 Locations in ${selectedTown}</h3>`;
-
-
-    if (townLocations.length === 0) {
-
-        html += `
-            <p>No locations found.</p>
-        `;
-
-    } else {
-
-
-        // SHOW EVERY LOCATION
-
-        townLocations.forEach(function(location) {
-
-            html += `
-
-                <div class="location">
-
-                    <strong>
-                        ${location.name}
-                    </strong>
-
-                    <br><br>
-
-                    🏥 ${location.type}
-
-                    <br>
-
-                    📍 ${location.address}
-
-                    <br>
-
-                    📞
-                    <a href="tel:${location.phone}">
-                        ${location.phone}
-                    </a>
-
-                    <br><br>
-
-                    <a
-                        href="${location.website}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🌐 Open Website
-                    </a>
-
-                </div>
-
-            `;
-
-        });
-
-    }
-
-
-    resultsDiv.innerHTML = html;
-
-});
-
+        </select>
 
 
         <!-- RESULTS -->
+
         <div id="results"></div>
 
     </div>
 
 
-    <!-- LOAD LOCATIONS DATA -->
-    <!-- THIS MUST ONLY APPEAR ONCE -->
+    <!-- ========================= -->
+    <!-- LOAD LOCATIONS.JS ONCE -->
+    <!-- ========================= -->
+
     <script src="locations.js"></script>
 
 
     <script>
 
-        // =========================
+        // ==========================================
         // LOGIN
-        // =========================
+        // ==========================================
 
         function login() {
 
@@ -265,9 +168,7 @@ townSelect.addEventListener("change", function() {
                 document.getElementById("mainSection").style.display =
                     "block";
 
-            }
-
-            else {
+            } else {
 
                 alert("Invalid Access Code");
 
@@ -277,16 +178,68 @@ townSelect.addEventListener("change", function() {
 
 
 
-        // =========================
-        // SHOW LOCATIONS BY TOWN
-        // =========================
+        // ==========================================
+        // CHECK THAT LOCATIONS LOADED
+        // ==========================================
 
-        document
-            .getElementById("townSelect")
-            .addEventListener("change", function () {
+        if (typeof locations === "undefined") {
+
+            document.getElementById("results").innerHTML = `
+                <p class="error">
+                    ERROR: locations.js could not be loaded.
+                </p>
+            `;
+
+        }
 
 
-                const selectedTown = this.value;
+
+        // ==========================================
+        // CREATE TOWN DROPDOWN AUTOMATICALLY
+        // ==========================================
+
+        const townSelect =
+            document.getElementById("townSelect");
+
+
+        if (typeof locations !== "undefined") {
+
+            const towns = [
+                ...new Set(
+                    locations.map(function(location) {
+                        return location.town;
+                    })
+                )
+            ].sort();
+
+
+            towns.forEach(function(town) {
+
+                const option =
+                    document.createElement("option");
+
+                option.value = town;
+
+                option.textContent = town;
+
+                townSelect.appendChild(option);
+
+            });
+
+        }
+
+
+
+        // ==========================================
+        // SHOW LOCATIONS WHEN TOWN IS SELECTED
+        // ==========================================
+
+        townSelect.addEventListener(
+            "change",
+            function() {
+
+                const selectedTown =
+                    this.value;
 
                 const resultsDiv =
                     document.getElementById("results");
@@ -303,13 +256,13 @@ townSelect.addEventListener("change", function() {
                 }
 
 
-                // Make sure locations.js loaded
+                // Check data
 
                 if (typeof locations === "undefined") {
 
                     resultsDiv.innerHTML = `
                         <p class="error">
-                            ERROR: locations.js was not loaded.
+                            ERROR: locations.js could not be loaded.
                         </p>
                     `;
 
@@ -318,13 +271,18 @@ townSelect.addEventListener("change", function() {
                 }
 
 
-                // Find locations for selected town
+                // Find ALL locations in the town
 
                 const townLocations =
                     locations.filter(function(location) {
 
-                        return location.town.trim().toLowerCase()
-                            === selectedTown.trim().toLowerCase();
+                        return location.town
+                            .trim()
+                            .toLowerCase()
+                            ===
+                            selectedTown
+                            .trim()
+                            .toLowerCase();
 
                     });
 
@@ -348,7 +306,7 @@ townSelect.addEventListener("change", function() {
                 }
 
 
-                // Display locations
+                // Show EVERY location
 
                 townLocations.forEach(function(location) {
 
@@ -364,13 +322,16 @@ townSelect.addEventListener("change", function() {
 
                             🏥 ${location.type}
 
-                            <br>
+                            <br><br>
 
-                            📍 ${location.town}
+                            📍 ${location.address}
 
-                            <br>
+                            <br><br>
 
-                            📞 ${location.phone}
+                            📞
+                            <a href="tel:${location.phone}">
+                                ${location.phone}
+                            </a>
 
                             <br><br>
 
@@ -391,13 +352,14 @@ townSelect.addEventListener("change", function() {
 
                 resultsDiv.innerHTML = html;
 
-            });
+            }
+        );
 
 
 
-        // =========================
+        // ==========================================
         // USE MY LOCATION
-        // =========================
+        // ==========================================
 
         function getLocation() {
 
@@ -429,7 +391,7 @@ townSelect.addEventListener("change", function() {
 
                         document.getElementById("results").innerHTML = `
                             <p class="error">
-                                ERROR: locations.js was not loaded.
+                                ERROR: locations.js could not be loaded.
                             </p>
                         `;
 
@@ -438,41 +400,44 @@ townSelect.addEventListener("change", function() {
                     }
 
 
-                    const results = [];
+                    // Calculate distance
+
+                    const results =
+                        locations.map(function(location) {
 
 
-                    locations.forEach(function(location) {
+                            const distance =
+                                Math.sqrt(
+
+                                    Math.pow(
+                                        userLat -
+                                        location.latitude,
+                                        2
+                                    )
+
+                                    +
+
+                                    Math.pow(
+                                        userLon -
+                                        location.longitude,
+                                        2
+                                    )
+
+                                );
 
 
-                        const distance = Math.sqrt(
+                            return {
 
-                            Math.pow(
-                                userLat - location.latitude,
-                                2
-                            )
+                                ...location,
 
-                            +
+                                distance: distance
 
-                            Math.pow(
-                                userLon - location.longitude,
-                                2
-                            )
-
-                        );
-
-
-                        results.push({
-
-                            ...location,
-
-                            distance: distance
+                            };
 
                         });
 
-                    });
 
-
-                    // Sort closest first
+                    // Closest first
 
                     results.sort(function(a, b) {
 
@@ -481,20 +446,39 @@ townSelect.addEventListener("change", function() {
                     });
 
 
-                    // Get 3 closest
+                    // 2 closest Urgent Care
 
-                  const urgentCares = results
-    .filter(x => x.type === "Urgent Care")
-    .slice(0, 2);
+                    const urgentCares =
+                        results
+                        .filter(function(location) {
 
-const emergencyRooms = results
-    .filter(x => x.type === "Emergency Room")
-    .slice(0, 2);
+                            return location.type === "Urgent Care";
 
-const nearest = [
-    ...urgentCares,
-    ...emergencyRooms
-];
+                        })
+                        .slice(0, 2);
+
+
+                    // 2 closest Emergency Rooms
+
+                    const emergencyRooms =
+                        results
+                        .filter(function(location) {
+
+                            return location.type === "Emergency Room";
+
+                        })
+                        .slice(0, 2);
+
+
+                    // Combine them
+
+                    const nearest = [
+
+                        ...urgentCares,
+
+                        ...emergencyRooms
+
+                    ];
 
 
                     let html =
@@ -502,7 +486,6 @@ const nearest = [
 
 
                     nearest.forEach(function(location) {
-
 
                         html += `
 
@@ -516,13 +499,16 @@ const nearest = [
 
                                 🏥 ${location.type}
 
-                                <br>
+                                <br><br>
 
-                                📍 ${location.town}
+                                📍 ${location.address}
 
-                                <br>
+                                <br><br>
 
-                                📞 ${location.phone}
+                                📞
+                                <a href="tel:${location.phone}">
+                                    ${location.phone}
+                                </a>
 
                                 <br><br>
 
