@@ -44,7 +44,7 @@
         }
 
         #mainSection {
-            display: none;
+            display: block;
         }
 
         #results {
@@ -82,31 +82,15 @@
     <h1>🏥 Medical Emergency Information</h1>
 
 
-    <!-- LOGIN -->
-
-    <div id="loginSection">
-
-        <p>Enter Company Access Code</p>
-
-        <input
-            type="password"
-            id="password"
-            placeholder="Access Code"
-        >
-
-        <button onclick="login()">
-            Continue
-        </button>
-
-    </div>
-
-
     <!-- MAIN -->
 
     <div id="mainSection">
 
-        <h2>Welcome</h2>
+       <h2>Custom Electric Emergency Medical Information</h2>
 
+<p>
+Use your location or select a town below.
+</p>
         <button onclick="getLocation()">
             📍 Use My Location
         </button>
@@ -138,30 +122,6 @@
 
 <script>
 
-    // =====================================
-    // LOGIN
-    // =====================================
-
-    function login() {
-
-        const passwordInput =
-            document.getElementById("password");
-
-        const password =
-            passwordInput.value;
-
-        if (password === "EC2026") {
-
-            document.getElementById("loginSection").style.display = "none";
-
-            document.getElementById("mainSection").style.display = "block";
-
-        } else {
-
-            alert("Invalid Access Code");
-
-        }
-    }
 
 
     // =====================================
