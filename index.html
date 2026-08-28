@@ -321,28 +321,41 @@
         // USE MY LOCATION
         // =====================================
 
- function getLocation() {
+function getLocation() {
 
     const resultsDiv = document.getElementById("results");
 
-    // Check browser support
     if (!navigator.geolocation) {
-
         resultsDiv.innerHTML = `
             <p class="error">
                 Your browser does not support location services.
             </p>
         `;
-
         return;
     }
 
-    // Show loading message
+    if (typeof locations === "undefined") {
+        resultsDiv.innerHTML = `
+            <p class="error">
+                ERROR: locations.js was not loaded.
+            </p>
+        `;
+        return;
+    }
+
+    if (!Array.isArray(locations) || locations.length === 0) {
+        resultsDiv.innerHTML = `
+            <p class="error">
+                ERROR: There are no locations in locations.js.
+            </p>
+        `;
+        return;
+    }
+
     resultsDiv.innerHTML = `
         <h3>📍 Finding locations near you...</h3>
         <p>Please wait...</p>
     `;
-
 
     navigator.geolocation.getCurrentPosition(
 
@@ -351,136 +364,96 @@
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
 
-
-            // Make sure locations.js loaded
-
-            if (
-                typeof locations === "undefined" ||
-                !Array.isArray(locations) ||
-                locations.length === 0
-            ) {
-
-                resultsDiv.innerHTML = `
-                    <p class="error">
-                        No location data was found.
-                    </p>
-                `;
-
-                return;
-            }
+            console.log("Your latitude:", userLat);
+            console.log("Your longitude:", userLon);
+            console.log("Locations:", locations);
 
 
-            // Calculate distance from user to every location
+            // Calculate distance to every location
 
-            const results = locations.map(function(location) {
+            const results = locations
+                .filter(function(location) {
 
-                const lat1 =
-                    userLat * Math.PI / 180;
+                    return typeof location.latitude === "number" &&
+                           typeof location.longitude === "number";
 
-                const lat2 =
-                    location.latitude * Math.PI / 180;
+                })
+                .map(function(location) {
 
-                const dLat =
-                    (location.latitude - userLat)
-                    * Math.PI / 180;
+                    const R = 3958.8; // Earth radius in miles
 
-                const dLon =
-                    (location.longitude - userLon)
-                    * Math.PI / 180;
+                    const lat1 =
+                        userLat * Math.PI / 180;
 
+                    const lat2 =
+                        location.latitude * Math.PI / 180;
 
-                // Haversine distance
+                    const dLat =
+                        (location.latitude - userLat)
+                        * Math.PI / 180;
 
-                const a =
-                    Math.sin(dLat / 2) *
-                    Math.sin(dLat / 2) +
-
-                    Math.cos(lat1) *
-                    Math.cos(lat2) *
-                    Math.sin(dLon / 2) *
-                    Math.sin(dLon / 2);
+                    const dLon =
+                        (location.longitude - userLon)
+                        * Math.PI / 180;
 
 
-                const c =
-                    2 * Math.atan2(
-                        Math.sqrt(a),
-                        Math.sqrt(1 - a)
-                    );
+                    const a =
+                        Math.sin(dLat / 2) *
+                        Math.sin(dLat / 2) +
+
+                        Math.cos(lat1) *
+                        Math.cos(lat2) *
+                        Math.sin(dLon / 2) *
+                        Math.sin(dLon / 2);
 
 
-                const distance =
-                    3958.8 * c; // miles
+                    const c =
+                        2 * Math.atan2(
+                            Math.sqrt(a),
+                            Math.sqrt(1 - a)
+                        );
 
 
-                return {
-                    ...location,
-                    distance: distance
-                };
+                    const distance = R * c;
+
+
+                    return {
+                        ...location,
+                        distance: distance
+                    };
+
+                });
+
+
+            // Sort closest first
+
+            results.sort(function(a, b) {
+
+                return a.distance - b.distance;
 
             });
 
 
-            // ==============================
-            // CLOSEST URGENT CARE
-            // ==============================
+            // Get closest 4
 
-            const urgentCares =
-                results
-                    .filter(function(location) {
-                        return location.type === "Urgent Care";
-                    })
-                    .sort(function(a, b) {
-                        return a.distance - b.distance;
-                    })
-                    .slice(0, 2);
+            const nearest = results.slice(0, 4);
 
-
-            // ==============================
-            // CLOSEST EMERGENCY ROOMS
-            // ==============================
-
-            const emergencyRooms =
-                results
-                    .filter(function(location) {
-                        return location.type === "Emergency Room";
-                    })
-                    .sort(function(a, b) {
-                        return a.distance - b.distance;
-                    })
-                    .slice(0, 2);
-
-
-            // ==============================
-            // COMBINE RESULTS
-            // ==============================
-
-            const nearest = [
-                ...urgentCares,
-                ...emergencyRooms
-            ];
-
-
-            // ==============================
-            // DISPLAY RESULTS
-            // ==============================
 
             let html = `
-                <h3>📍 Closest Medical Locations</h3>
+                <h3>📍 4 Closest Medical Locations</h3>
             `;
 
 
             if (nearest.length === 0) {
 
                 html += `
-                    <p>
-                        No medical locations were found.
+                    <p class="error">
+                        No locations with valid coordinates were found.
                     </p>
                 `;
 
             }
 
-
-            // Display each location
 
             nearest.forEach(function(location) {
 
@@ -537,37 +510,48 @@
 
         function(error) {
 
-            let message =
-                "Unable to get your location.";
-
             if (error.code === 1) {
 
-                message =
-                    "Location permission was denied. " +
-                    "Please allow location access in your browser.";
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        📍 Location permission was denied.
+                        Please allow location access and try again.
+                    </p>
+                `;
 
             }
 
             else if (error.code === 2) {
 
-                message =
-                    "Your location could not be determined.";
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        📍 Your location could not be determined.
+                        Please try again.
+                    </p>
+                `;
 
             }
 
             else if (error.code === 3) {
 
-                message =
-                    "Location request timed out. Please try again.";
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        📍 Location request timed out.
+                        Please try again.
+                    </p>
+                `;
 
             }
 
+            else {
 
-            resultsDiv.innerHTML = `
-                <p class="error">
-                    ${message}
-                </p>
-            `;
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        📍 Unable to get your location.
+                    </p>
+                `;
+
+            }
 
         },
 
@@ -578,9 +562,7 @@
         }
 
     );
-
 }
-
 
     </script>
 
