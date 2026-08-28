@@ -321,179 +321,266 @@
         // USE MY LOCATION
         // =====================================
 
-        function getLocation() {
+ function getLocation() {
 
-            if (!navigator.geolocation) {
+    const resultsDiv = document.getElementById("results");
 
-                alert(
-                    "Your browser does not support location services."
-                );
+    // Check browser support
+    if (!navigator.geolocation) {
+
+        resultsDiv.innerHTML = `
+            <p class="error">
+                Your browser does not support location services.
+            </p>
+        `;
+
+        return;
+    }
+
+    // Show loading message
+    resultsDiv.innerHTML = `
+        <h3>📍 Finding locations near you...</h3>
+        <p>Please wait...</p>
+    `;
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const userLat = position.coords.latitude;
+            const userLon = position.coords.longitude;
+
+
+            // Make sure locations.js loaded
+
+            if (
+                typeof locations === "undefined" ||
+                !Array.isArray(locations) ||
+                locations.length === 0
+            ) {
+
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        No location data was found.
+                    </p>
+                `;
 
                 return;
+            }
+
+
+            // Calculate distance from user to every location
+
+            const results = locations.map(function(location) {
+
+                const lat1 =
+                    userLat * Math.PI / 180;
+
+                const lat2 =
+                    location.latitude * Math.PI / 180;
+
+                const dLat =
+                    (location.latitude - userLat)
+                    * Math.PI / 180;
+
+                const dLon =
+                    (location.longitude - userLon)
+                    * Math.PI / 180;
+
+
+                // Haversine distance
+
+                const a =
+                    Math.sin(dLat / 2) *
+                    Math.sin(dLat / 2) +
+
+                    Math.cos(lat1) *
+                    Math.cos(lat2) *
+                    Math.sin(dLon / 2) *
+                    Math.sin(dLon / 2);
+
+
+                const c =
+                    2 * Math.atan2(
+                        Math.sqrt(a),
+                        Math.sqrt(1 - a)
+                    );
+
+
+                const distance =
+                    3958.8 * c; // miles
+
+
+                return {
+                    ...location,
+                    distance: distance
+                };
+
+            });
+
+
+            // ==============================
+            // CLOSEST URGENT CARE
+            // ==============================
+
+            const urgentCares =
+                results
+                    .filter(function(location) {
+                        return location.type === "Urgent Care";
+                    })
+                    .sort(function(a, b) {
+                        return a.distance - b.distance;
+                    })
+                    .slice(0, 2);
+
+
+            // ==============================
+            // CLOSEST EMERGENCY ROOMS
+            // ==============================
+
+            const emergencyRooms =
+                results
+                    .filter(function(location) {
+                        return location.type === "Emergency Room";
+                    })
+                    .sort(function(a, b) {
+                        return a.distance - b.distance;
+                    })
+                    .slice(0, 2);
+
+
+            // ==============================
+            // COMBINE RESULTS
+            // ==============================
+
+            const nearest = [
+                ...urgentCares,
+                ...emergencyRooms
+            ];
+
+
+            // ==============================
+            // DISPLAY RESULTS
+            // ==============================
+
+            let html = `
+                <h3>📍 Closest Medical Locations</h3>
+            `;
+
+
+            if (nearest.length === 0) {
+
+                html += `
+                    <p>
+                        No medical locations were found.
+                    </p>
+                `;
 
             }
 
 
-            navigator.geolocation.getCurrentPosition(
+            // Display each location
 
-                function(position) {
+            nearest.forEach(function(location) {
 
-                    const userLat =
-                        position.coords.latitude;
+                html += `
 
-                    const userLon =
-                        position.coords.longitude;
+                    <div class="location">
 
+                        <strong>
+                            ${location.name}
+                        </strong>
 
-                    if (typeof locations === "undefined") {
+                        <br><br>
 
-                        document.getElementById("results").innerHTML =
-                            "<p class='error'>locations.js is not loaded.</p>";
+                        🏥 ${location.type}
 
-                        return;
+                        <br><br>
 
-                    }
+                        📍 ${location.address}
 
+                        <br><br>
 
-                    // CALCULATE DISTANCE
+                        📏
+                        ${location.distance.toFixed(1)}
+                        miles away
 
-                    const results =
-                        locations.map(function(location) {
+                        <br><br>
 
-                            const distance =
-                                Math.sqrt(
+                        📞
+                        <a href="tel:${location.phone}">
+                            ${location.phone}
+                        </a>
 
-                                    Math.pow(
-                                        userLat -
-                                        location.latitude,
-                                        2
-                                    )
+                        <br><br>
 
-                                    +
+                        <a
+                            href="${location.website}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            🌐 Open Website
+                        </a>
 
-                                    Math.pow(
-                                        userLon -
-                                        location.longitude,
-                                        2
-                                    )
+                    </div>
 
-                                );
+                `;
 
+            });
 
-                            return {
 
-                                ...location,
+            resultsDiv.innerHTML = html;
 
-                                distance: distance
+        },
 
-                            };
 
-                        });
+        function(error) {
 
+            let message =
+                "Unable to get your location.";
 
-                    // SORT CLOSEST FIRST
+            if (error.code === 1) {
 
-                    results.sort(function(a, b) {
+                message =
+                    "Location permission was denied. " +
+                    "Please allow location access in your browser.";
 
-                        return a.distance - b.distance;
+            }
 
-                    });
+            else if (error.code === 2) {
 
+                message =
+                    "Your location could not be determined.";
 
-                    // 2 CLOSEST URGENT CARE
+            }
 
-                    const urgentCares =
-                        results
-                        .filter(function(location) {
+            else if (error.code === 3) {
 
-                            return location.type === "Urgent Care";
+                message =
+                    "Location request timed out. Please try again.";
 
-                        })
-                        .slice(0, 2);
+            }
 
 
-                    // 2 CLOSEST EMERGENCY ROOMS
+            resultsDiv.innerHTML = `
+                <p class="error">
+                    ${message}
+                </p>
+            `;
 
-                    const emergencyRooms =
-                        results
-                        .filter(function(location) {
+        },
 
-                            return location.type === "Emergency Room";
-
-                        })
-                        .slice(0, 2);
-
-
-                    const nearest = [
-                        ...urgentCares,
-                        ...emergencyRooms
-                    ];
-
-
-                    let html =
-                        "<h3>📍 Closest Locations</h3>";
-
-
-                    nearest.forEach(function(location) {
-
-                        html += `
-
-                            <div class="location">
-
-                                <strong>
-                                    ${location.name}
-                                </strong>
-
-                                <br><br>
-
-                                🏥 ${location.type}
-
-                                <br><br>
-
-                                📍 ${location.address}
-
-                                <br><br>
-
-                                📞
-                                <a href="tel:${location.phone}">
-                                    ${location.phone}
-                                </a>
-
-                                <br><br>
-
-                                <a
-                                    href="${location.website}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    🌐 Open Website
-                                </a>
-
-                            </div>
-
-                        `;
-
-                    });
-
-
-                    document.getElementById("results").innerHTML =
-                        html;
-
-                },
-
-
-                function() {
-
-                    alert(
-                        "Unable to get your location. " +
-                        "Please allow location access."
-                    );
-
-                }
-
-            );
-
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
         }
+
+    );
+
+}
+
 
     </script>
 
