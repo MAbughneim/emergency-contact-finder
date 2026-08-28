@@ -206,6 +206,49 @@
 
         }
 
+        document.getElementById("townSelect").addEventListener("change", function () {
+
+    const selectedTown = this.value;
+
+    if (!selectedTown) {
+        document.getElementById("results").innerHTML = "";
+        return;
+    }
+
+    const townLocations = locations.filter(function (location) {
+        return location.town === selectedTown;
+    });
+
+    let html = `<h3>Locations in ${selectedTown}</h3>`;
+
+    if (townLocations.length === 0) {
+        html += `<p>No locations found for ${selectedTown}.</p>`;
+    } else {
+
+        townLocations.forEach(function (location) {
+
+            html += `
+                <div class="location">
+                    <strong>${location.name}</strong><br>
+                    ${location.type}<br>
+                    📍 ${location.town}<br>
+                    📞 ${location.phone}<br><br>
+
+                    <a href="${location.website}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        🌐 Open Website
+                    </a>
+                </div>
+            `;
+
+        });
+    }
+
+    document.getElementById("results").innerHTML = html;
+
+});
+
 </script>
 
 <script src="locations.js"></script>
