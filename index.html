@@ -116,30 +116,121 @@
 
 
         <!-- TOWN -->
-       <select id="townSelect">
-    <option value="">Select Town</option>
+      // ==========================================
+// AUTOMATICALLY CREATE TOWN DROPDOWN
+// ==========================================
 
-    <option value="Bloomfield">Bloomfield</option>
-    <option value="Bridgeport">Bridgeport</option>
-    <option value="Ellington">Ellington</option>
-    <option value="Hartford">Hartford</option>
-    <option value="Manchester">Manchester</option>
-    <option value="Meriden">Meriden</option>
-    <option value="Middletown">Middletown</option>
-    <option value="New Britain">New Britain</option>
-    <option value="New Haven">New Haven</option>
-    <option value="New London">New London</option>
-    <option value="Newington">Newington</option>
-    <option value="Norwich">Norwich</option>
-    <option value="Old Saybrook">Old Saybrook</option>
-    <option value="Storrs">Storrs</option>
-    <option value="Torrington">Torrington</option>
-    <option value="Vernon">Vernon</option>
-    <option value="Wallingford">Wallingford</option>
-    <option value="Waterbury">Waterbury</option>
-    <option value="West Hartford">West Hartford</option>
-    <option value="Willimantic">Willimantic</option>
-</select>
+const townSelect = document.getElementById("townSelect");
+
+// Get unique towns from locations
+const towns = [...new Set(
+    locations.map(location => location.town)
+)].sort();
+
+// Add towns to dropdown
+towns.forEach(function(town) {
+
+    const option = document.createElement("option");
+
+    option.value = town;
+    option.textContent = town;
+
+    townSelect.appendChild(option);
+
+});
+
+
+// ==========================================
+// SHOW LOCATIONS WHEN TOWN IS SELECTED
+// ==========================================
+
+townSelect.addEventListener("change", function() {
+
+    const selectedTown = this.value;
+
+    const resultsDiv =
+        document.getElementById("results");
+
+    if (!selectedTown) {
+
+        resultsDiv.innerHTML = "";
+
+        return;
+    }
+
+
+    // Find ALL locations in selected town
+
+    const townLocations = locations.filter(function(location) {
+
+        return location.town.toLowerCase() ===
+               selectedTown.toLowerCase();
+
+    });
+
+
+    let html =
+        `<h3>📍 Locations in ${selectedTown}</h3>`;
+
+
+    if (townLocations.length === 0) {
+
+        html += `
+            <p>No locations found.</p>
+        `;
+
+    } else {
+
+
+        // SHOW EVERY LOCATION
+
+        townLocations.forEach(function(location) {
+
+            html += `
+
+                <div class="location">
+
+                    <strong>
+                        ${location.name}
+                    </strong>
+
+                    <br><br>
+
+                    🏥 ${location.type}
+
+                    <br>
+
+                    📍 ${location.address}
+
+                    <br>
+
+                    📞
+                    <a href="tel:${location.phone}">
+                        ${location.phone}
+                    </a>
+
+                    <br><br>
+
+                    <a
+                        href="${location.website}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🌐 Open Website
+                    </a>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    resultsDiv.innerHTML = html;
+
+});
 
 
 
