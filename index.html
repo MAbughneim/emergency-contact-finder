@@ -142,27 +142,25 @@
         // =====================================
         // LOGIN
         // =====================================
+function login() {
+    alert("Login button clicked");
 
-        function login() {
+    const password =
+        document.getElementById("password").value;
 
-            const password =
-                document.getElementById("password").value;
+    if (password === "EC2026") {
 
-            if (password === "EC2026") {
+        document.getElementById("loginSection").style.display = "none";
 
-                document.getElementById("loginSection").style.display =
-                    "none";
+        document.getElementById("mainSection").style.display = "block";
 
-                document.getElementById("mainSection").style.display =
-                    "block";
+    } else {
 
-            } else {
+        alert("Invalid Access Code");
 
-                alert("Invalid Access Code");
+    }
+}
 
-            }
-
-        }
 
 
         // =====================================
