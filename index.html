@@ -74,7 +74,7 @@ function login(){
 
     const password = document.getElementById("password").value;
 
-    if(password === "UC2026"){
+    if(password === "EC2026"){
         document.getElementById("loginSection").style.display="none";
         document.getElementById("mainSection").style.display="block";
     }
@@ -83,14 +83,42 @@ function login(){
     }
 }
 
-function getLocation(){
+async function getLocation() {
 
-    navigator.geolocation.getCurrentPosition(function(position){
+    navigator.geolocation.getCurrentPosition(async function(position) {
 
-        document.getElementById("results").innerHTML=
-        "<h3>Location Found</h3>" +
-        "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        document.getElementById("results").innerHTML =
+            "<h3>Searching...</h3>";
+
+        try {
+
+           const response = await fetch("https://default4d4ab0e0600f4fccab3ed1849682f0.6f.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/29/workflows/21d81b57dac94e4699080d67eafc6975/triggers/manual/paths/invoke?api-version=1", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+  
+                    latitude: latitude,
+                    longitude: longitude
+                })
+            });
+
+            const data = await response.text();
+
+            document.getElementById("results").innerHTML =
+                "<h3>Flow Response</h3><p>" + data + "</p>";
+
+        }
+        catch(error) {
+
+            document.getElementById("results").innerHTML =
+                "<h3>Error</h3><p>" + error + "</p>";
+
+        }
 
     });
 
