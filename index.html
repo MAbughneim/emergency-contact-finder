@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Medical Emergency Information</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
         body {
@@ -13,11 +16,17 @@
             text-align: center;
         }
 
-        input, select {
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        input,
+        select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             box-sizing: border-box;
+            font-size: 16px;
         }
 
         button {
@@ -27,6 +36,7 @@
             padding: 12px 20px;
             cursor: pointer;
             border-radius: 4px;
+            font-size: 16px;
         }
 
         button:hover {
@@ -37,19 +47,42 @@
             display: none;
         }
 
+        #results {
+            margin-top: 25px;
+            text-align: left;
+        }
+
         .location {
             margin-bottom: 20px;
             padding: 15px;
             border: 1px solid #ccc;
             border-radius: 6px;
+            background: #f9f9f9;
+        }
+
+        .location strong {
+            font-size: 18px;
+        }
+
+        .location a {
+            color: #0078D4;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
+
 
 <body>
 
     <h1>🏥 Medical Emergency Information</h1>
 
+
+    <!-- LOGIN -->
     <div id="loginSection">
 
         <p>Enter Company Access Code</p>
@@ -60,119 +93,334 @@
             placeholder="Access Code"
         >
 
-        <button onclick="login()">Continue</button>
+        <button onclick="login()">
+            Continue
+        </button>
 
     </div>
 
+
+    <!-- MAIN PAGE -->
     <div id="mainSection">
 
         <h2>Welcome</h2>
 
-        <button onclick="getLocation()">📍 Use My Location</button>
+
+        <!-- LOCATION BUTTON -->
+        <button onclick="getLocation()">
+            📍 Use My Location
+        </button>
+
 
         <br><br>
 
+
+        <!-- TOWN -->
         <select id="townSelect">
-            <option value="">Select Town</option>
-            <option value="Bloomfield">Bloomfield</option>
-            <option value="Hartford">Hartford</option>
-            <option value="Manchester">Manchester</option>
-            <option value="New Britain">New Britain</option>
+
+            <option value="">
+                Select Town
+            </option>
+
+            <option value="Bloomfield">
+                Bloomfield
+            </option>
+
+            <option value="Hartford">
+                Hartford
+            </option>
+
+            <option value="Manchester">
+                Manchester
+            </option>
+
+            <option value="New Britain">
+                New Britain
+            </option>
+
         </select>
 
+
+        <!-- RESULTS -->
         <div id="results"></div>
 
     </div>
 
-    <!-- Your locations.js file -->
+
+    <!-- LOAD LOCATIONS DATA -->
+    <!-- THIS MUST ONLY APPEAR ONCE -->
     <script src="locations.js"></script>
 
+
     <script>
+
+        // =========================
+        // LOGIN
+        // =========================
 
         function login() {
 
             const password =
                 document.getElementById("password").value;
 
+
             if (password === "EC2026") {
 
-                document.getElementById("loginSection").style.display = "none";
+                document.getElementById("loginSection").style.display =
+                    "none";
 
-                document.getElementById("mainSection").style.display = "block";
+                document.getElementById("mainSection").style.display =
+                    "block";
 
-            } else {
+            }
+
+            else {
 
                 alert("Invalid Access Code");
 
             }
+
         }
 
 
+
+        // =========================
+        // SHOW LOCATIONS BY TOWN
+        // =========================
+
+        document
+            .getElementById("townSelect")
+            .addEventListener("change", function () {
+
+
+                const selectedTown = this.value;
+
+                const resultsDiv =
+                    document.getElementById("results");
+
+
+                // Nothing selected
+
+                if (selectedTown === "") {
+
+                    resultsDiv.innerHTML = "";
+
+                    return;
+
+                }
+
+
+                // Make sure locations.js loaded
+
+                if (typeof locations === "undefined") {
+
+                    resultsDiv.innerHTML = `
+                        <p class="error">
+                            ERROR: locations.js was not loaded.
+                        </p>
+                    `;
+
+                    return;
+
+                }
+
+
+                // Find locations for selected town
+
+                const townLocations =
+                    locations.filter(function(location) {
+
+                        return location.town.trim().toLowerCase()
+                            === selectedTown.trim().toLowerCase();
+
+                    });
+
+
+                // Heading
+
+                let html =
+                    `<h3>📍 Locations in ${selectedTown}</h3>`;
+
+
+                // No locations
+
+                if (townLocations.length === 0) {
+
+                    html += `
+                        <p>
+                            No locations found in ${selectedTown}.
+                        </p>
+                    `;
+
+                }
+
+
+                // Display locations
+
+                townLocations.forEach(function(location) {
+
+                    html += `
+
+                        <div class="location">
+
+                            <strong>
+                                ${location.name}
+                            </strong>
+
+                            <br><br>
+
+                            🏥 ${location.type}
+
+                            <br>
+
+                            📍 ${location.town}
+
+                            <br>
+
+                            📞 ${location.phone}
+
+                            <br><br>
+
+                            <a
+                                href="${location.website}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                🌐 Open Website
+                            </a>
+
+                        </div>
+
+                    `;
+
+                });
+
+
+                resultsDiv.innerHTML = html;
+
+            });
+
+
+
+        // =========================
+        // USE MY LOCATION
+        // =========================
+
         function getLocation() {
+
 
             if (!navigator.geolocation) {
 
-                alert("Your browser does not support location services.");
+                alert(
+                    "Your browser does not support location services."
+                );
+
                 return;
 
             }
+
 
             navigator.geolocation.getCurrentPosition(
 
                 function(position) {
 
-                    const userLat = position.coords.latitude;
-                    const userLon = position.coords.longitude;
+
+                    const userLat =
+                        position.coords.latitude;
+
+                    const userLon =
+                        position.coords.longitude;
+
+
+                    if (typeof locations === "undefined") {
+
+                        document.getElementById("results").innerHTML = `
+                            <p class="error">
+                                ERROR: locations.js was not loaded.
+                            </p>
+                        `;
+
+                        return;
+
+                    }
+
 
                     const results = [];
 
+
                     locations.forEach(function(location) {
 
-                        const distance =
-                            Math.sqrt(
-                                Math.pow(
-                                    userLat - location.latitude,
-                                    2
-                                ) +
-                                Math.pow(
-                                    userLon - location.longitude,
-                                    2
-                                )
-                            );
+
+                        const distance = Math.sqrt(
+
+                            Math.pow(
+                                userLat - location.latitude,
+                                2
+                            )
+
+                            +
+
+                            Math.pow(
+                                userLon - location.longitude,
+                                2
+                            )
+
+                        );
+
 
                         results.push({
+
                             ...location,
+
                             distance: distance
+
                         });
 
                     });
 
 
+                    // Sort closest first
+
                     results.sort(function(a, b) {
+
                         return a.distance - b.distance;
+
                     });
 
 
-                    const nearest = results.slice(0, 3);
+                    // Get 3 closest
 
-                    let html = "<h3>Closest Locations</h3>";
+                    const nearest =
+                        results.slice(0, 3);
+
+
+                    let html =
+                        "<h3>📍 Closest Locations</h3>";
 
 
                     nearest.forEach(function(location) {
 
+
                         html += `
+
                             <div class="location">
 
-                                <strong>${location.name}</strong>
+                                <strong>
+                                    ${location.name}
+                                </strong>
+
+                                <br><br>
+
+                                🏥 ${location.type}
+
                                 <br>
 
-                                ${location.type}
-                                <br>
+                                📍 ${location.town}
 
-                                ${location.town}
                                 <br>
 
                                 📞 ${location.phone}
+
                                 <br><br>
 
                                 <a
@@ -184,14 +432,18 @@
                                 </a>
 
                             </div>
+
                         `;
 
                     });
 
 
-                    document.getElementById("results").innerHTML = html;
+                    document.getElementById("results").innerHTML =
+                        html;
+
 
                 },
+
 
                 function(error) {
 
@@ -206,53 +458,8 @@
 
         }
 
-        document.getElementById("townSelect").addEventListener("change", function () {
-
-    const selectedTown = this.value;
-
-    if (!selectedTown) {
-        document.getElementById("results").innerHTML = "";
-        return;
-    }
-
-    const townLocations = locations.filter(function (location) {
-        return location.town === selectedTown;
-    });
-
-    let html = `<h3>Locations in ${selectedTown}</h3>`;
-
-    if (townLocations.length === 0) {
-        html += `<p>No locations found for ${selectedTown}.</p>`;
-    } else {
-
-        townLocations.forEach(function (location) {
-
-            html += `
-                <div class="location">
-                    <strong>${location.name}</strong><br>
-                    ${location.type}<br>
-                    📍 ${location.town}<br>
-                    📞 ${location.phone}<br><br>
-
-                    <a href="${location.website}"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        🌐 Open Website
-                    </a>
-                </div>
-            `;
-
-        });
-    }
-
-    document.getElementById("results").innerHTML = html;
-
-});
-
-</script>
-
-<script src="locations.js"></script>
+    </script>
 
 </body>
-</html>
 
+</html>
