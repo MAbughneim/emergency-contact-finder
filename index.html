@@ -471,52 +471,73 @@ let html = `
             }
 
 
-            nearest.forEach(function(location) {
+  html += "<h4>Urgent Care</h4>";
 
-                html += `
+urgentCares.forEach(function(location) {
 
-                    <div class="location">
+    html += `
+        <div class="location">
 
-                        <strong>
-                            ${location.name}
-                        </strong>
+            <strong>${location.name}</strong>
 
-                        <br><br>
+            <br><br>
 
-                        🏥 ${location.type}
+            📍 ${location.address}
 
-                        <br><br>
+            <br><br>
 
-                        📍 ${location.address}
+            📏 ${location.distance.toFixed(1)} miles away
 
-                        <br><br>
+            <br><br>
 
-                        📏
-                        ${location.distance.toFixed(1)}
-                        miles away
+            📞
+            tel:${location.phone}
+                ${location.phone}
+            </a>
 
-                        <br><br>
+            <br><br>
 
-                        📞
-                        <a href="tel:${location.phone}">
-                            ${location.phone}
-                        </a>
+            ${location.website}
+                🌐 Open Website
+            </a>
 
-                        <br><br>
+        </div>
+    `;
+});
 
-                        <a
-                            href="${location.website}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            🌐 Open Website
-                        </a>
+html += "<h4>Emergency Rooms</h4>";
 
-                    </div>
+emergencyRooms.forEach(function(location) {
 
-                `;
+    html += `
+        <div class="location">
 
-            });
+            <strong>${location.name}</strong>
+
+            <br><br>
+
+            📍 ${location.address}
+
+            <br><br>
+
+            📏 ${location.distance.toFixed(1)} miles away
+
+            <br><br>
+
+            📞
+            tel:${location.phone}
+                ${location.phone}
+            </a>
+
+            <br><br>
+
+            ${location.website}
+                🌐 Open Website
+            </a>
+
+        </div>
+    `;
+});
 
 
             resultsDiv.innerHTML = html;
