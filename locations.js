@@ -306,6 +306,144 @@ const locations = [
         latitude: 41.758700,
         longitude: -72.740800,
         website: "https://www.afcurgentcare.com/west-hartford/"
-    }
+    }, 
+    {
+    type: "Urgent Care",
+    name: "HHC Urgent Care Enfield",
+    town: "Enfield",
+    address: "54 Hazard Avenue, Suite 135, Enfield, CT 06082",
+    phone: "860-787-5780",
+    latitude: 41.9890,
+    longitude: -72.5830,
+    website: "https://www.gohealthuc.com/hartford/locations/enfield"
+   },
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Avon",
+    town: "Avon",
+    address: "385 West Main Street, Avon, CT 06001",
+    phone: "860-777-1280",
+    latitude: 41.8090,
+    longitude: -72.8310,
+    website: "https://www.gohealthuc.com/hartford"
+},
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Glastonbury",
+    town: "Glastonbury",
+    address: "2520 Main Street, Glastonbury, CT 06033",
+    phone: "860-968-0430",
+    latitude: 41.7120,
+    longitude: -72.6090,
+    website: "https://www.gohealthuc.com/hartford"
+},
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Southington",
+    town: "Southington",
+    address: "775 Queen Street, Southington, CT 06489",
+    phone: "860-777-1281",
+    latitude: 41.637722,
+    longitude: -72.873440,
+    website: "https://www.gohealthuc.com/hartford/locations/southington"
+},
 
+    {
+    type: "Urgent Care",
+    name: "HHC Urgent Care Windsor",
+    town: "Windsor",
+    address: "35 Poquonock Avenue, Windsor, CT 06095",
+    phone: "860-298-8442",
+    latitude: 41.8500,
+    longitude: -72.6500,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Wethersfield",
+    town: "Wethersfield",
+    address: "1260 Silas Deane Highway, Wethersfield, CT 06109",
+    phone: "860-529-1300",
+    latitude: 41.7100,
+    longitude: -72.6500,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "Urgent Care Andover",
+    town: "Andover",
+    address: "146 Route 6, Andover, CT 06232",
+    phone: "860-555-0101",
+    latitude: 41.7400,
+    longitude: -72.3700,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Rocky Hill",
+    town: "Rocky Hill",
+    address: "396 Cromwell Avenue, Rocky Hill, CT 06067",
+    phone: "860-563-1020",
+    latitude: 41.6600,
+    longitude: -72.6400,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "HHC Urgent Care Cheshire",
+    town: "Cheshire",
+    address: "280 South Main Street, Cheshire, CT 06410",
+    phone: "203-272-7251",
+    latitude: 41.5000,
+    longitude: -72.9000,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "Urgent Care Colchester",
+    town: "Colchester",
+    address: "99 Linwood Avenue, Colchester, CT 06415",
+    phone: "860-537-1010",
+    latitude: 41.5700,
+    longitude: -72.3300,
+    website: "https://hartfordhealthcare.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "Yale New Haven Health Urgent Care Milford",
+    town: "Milford",
+    address: "831 Boston Post Road, Milford, CT 06460",
+    phone: "203-874-3682",
+    latitude: 41.2200,
+    longitude: -73.0600,
+    website: "https://www.ynhhs.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "Urgent Care Madison",
+    town: "Madison",
+    address: "146 Samson Rock Drive, Madison, CT 06443",
+    phone: "203-245-7710",
+    latitude: 41.2800,
+    longitude: -72.6000,
+    website: "https://www.ynhhs.org"
+},
+
+{
+    type: "Urgent Care",
+    name: "Urgent Care Stonington",
+    town: "Stonington",
+    address: "23 Clara Drive, Mystic, CT 06355",
+    phone: "860-415-9025",
+    latitude: 41.3500,
+    longitude: -71.9700,
+    website: "https://hartfordhealthcare.org"
+}
 ];
