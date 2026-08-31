@@ -108,7 +108,11 @@ Use your location or select a town below.
 
         </select>
 
+<button onclick="showSafety()">
+🦺 Safety Information
+</button>
 
+<br><br>
         <!-- RESULTS -->
 
         <div id="results"></div>
@@ -552,7 +556,33 @@ Use your location or select a town below.
         );
 
     }
+function showSafety() {
 
+    document.getElementById("results").innerHTML = `
+
+        <h3>🦺 Safety Information</h3>
+
+        <div class="location">
+            <p>
+                <a href="safety/Safety Manual- Custom Electric Aug 2026.pdf"
+                   target
+                </a>
+            </p>
+
+            <p>
+                <a href="safety/Safety Manual Table of Contents- Custom Electric May 2025.pdf"
+                   target Table of Contents
+                </a>
+            </p>
+
+            <p>
+                <a href="safety/SDS Sheets- Custom Electric Aug 2026.pdf"
+                   target="_           </a>
+            </p>
+        </div>
+
+    `;
+}
 </script>
 
 </body>
