@@ -586,16 +586,8 @@ function showSafety() {
     `;
 }
 function showPDF(filename) {
-    document.getElementById("pdfViewer").innerHTML = `
-        window.open(`./safety/${filename}`, "_blank");
-        width="100%"
-        height="800px"
-        style="border:1px solid #ccc; border-radius:8px;">
-        </iframe>
-    `;
+    window.open(`./safety/${filename}`, "_blank");
 }
-
-
 
 
 </script>
