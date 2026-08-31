@@ -16,8 +16,16 @@
             text-align: center;
         }
 
-        h1 {
-            color: #222;
+      h1 {
+    color: #222;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #555;
+    margin-top: 0;
+}
+
         }
 
         input,
@@ -53,12 +61,14 @@
         }
 
         .location {
-            margin-bottom: 20px;
-            padding: 18px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: #f8f8f8;
-        }
+    margin-bottom: 20px;
+    padding: 18px;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+    
 
         .location strong {
             font-size: 18px;
@@ -67,6 +77,10 @@
         .location a {
             color: #0078D4;
             font-weight: bold;
+            .location button {
+    width: 100%;
+    margin-bottom: 10px;
+}
         }
 
         .error {
@@ -79,14 +93,14 @@
 
 <body>
 
-    <h1>🏥 Custom Electric Emergency & Safety Information </h1>
+    <h1> 🚨 Custom Electric Emergency & Safety Information </h1>
 
 
     <!-- MAIN -->
 
     <div id="mainSection">
 
-       <h2>Medical, Emergency & Safety Resources</h2>
+       <h2> Medical Facilities, Safety Resources & SDS Documents </h2>
 
 <p>
 Use your location or select a town below.
@@ -106,7 +120,9 @@ Use your location or select a town below.
                 Select Town
             </option>
 
-        </select>
+</select>
+
+<br><br>
 
 <button onclick="showSafety()">
 🦺 Safety Information
@@ -181,107 +197,92 @@ Use your location or select a town below.
 
     townSelect.addEventListener("change", function() {
 
-        const selectedTown = this.value;
+ const selectedTown = this.value;
 
-        const results =
-            document.getElementById("results");
+const results =
+    document.getElementById("results");
 
+if (selectedTown === "") {
 
-        if (selectedTown === "") {
+    results.innerHTML = "";
 
-            results.innerHTML = "";
+    return;
 
-            return;
+}
 
-        }
+const townLocations =
+    locations.filter(function(location) {
 
-
-        const townLocations =
-            locations.filter(function(location) {
-
-                return location.town.toLowerCase() ===
-                       selectedTown.toLowerCase();
-
-            });
-
-
-        let html =
-            "<h3>📍 Locations in " +
-            selectedTown +
-            "</h3>";
-
-
-        townLocations.forEach(function(location) {
-
-            html += `
-
-                <div class="location">
-
-                    <strong>
-                        ${location.name}
-                    </strong>
-
-                    <br><br>
-
-                    🏥 ${location.type}
-
-                    <br><br>
-
-📍
-<a
-    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-    target="_blank"
-    rel="noopener"
->
-    ${location.address}
-</a>
-
-<br><br>
-
-
-<br><br>
-
-🕒 Mon-Fri:
-${location.weekdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Saturday:
-${location.saturdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Sunday:
-${location.sundayHours || "Not Available"}
-
-<br><br>
-                    📞
-                    <a href="tel:${location.phone}">
-                        ${location.phone}
-                    </a>
-
-                    <br><br>
-
-                    <a
-                        href="${location.website}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🌐 Open Website
-                    </a>
-
-                </div>
-
-            `;
-
-        });
-
-
-        results.innerHTML = html;
+        return location.town.toLowerCase() ===
+               selectedTown.toLowerCase();
 
     });
 
+let html =
+    "<h3>📍 Locations in " +
+    selectedTown +
+    "</h3>";
 
+townLocations.forEach(function(location) {
+
+    html += `
+
+        <div class="location">
+
+            <strong>
+                ${location.name}
+            </strong>
+
+            <br><br>
+
+            🏥 ${location.type}
+
+            <br><br>
+
+            📍
+            <a
+                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                ${location.address}
+            </a>
+
+            <hr style="margin:10px 0;">
+
+            🕒 Mon-Fri:
+            ${location.weekdayHours || "Not Available"}
+
+            <br><br>
+
+            🕒 Saturday:
+            ${location.saturdayHours || "Not Available"}
+
+            <br><br>
+
+            🕒 Sunday:
+            ${location.sundayHours || "Not Available"}
+
+            <br><br>
+
+            📞
+            tel:${location.phone}
+                ${location.phone}
+            </a>
+
+            <br><br>
+
+            ${location.website}
+                🌐 Open Website
+            </a>
+
+        </div>
+
+    `;
+
+});
+
+results.innerHTML = html;
     // =====================================
     // USE MY LOCATION
     // =====================================
