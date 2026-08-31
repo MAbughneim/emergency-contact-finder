@@ -443,14 +443,11 @@ results.innerHTML = html;
 
                                 <br><br>
 
-                                📏
-                                ${location.distance.toFixed(1)}
-                                miles away
+📏
+${location.distance.toFixed(1)}
+miles away
 
-                                <br><br>
-
-                                
-<br><br>
+<hr style="margin:10px 0;">
 
 🕒 Mon-Fri:
 ${location.weekdayHours || "Not Available"}
@@ -465,8 +462,9 @@ ${location.saturdayHours || "Not Available"}
 🕒 Sunday:
 ${location.sundayHours || "Not Available"}
 
-<br><br>
-                                📞
+<hr style="margin:10px 0;">
+
+📞
                                 <a href="tel:${location.phone}">
                                     ${location.phone}
                                 </a>
