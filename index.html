@@ -585,17 +585,17 @@ function showSafety() {
         </div>
     `;
 }
-
 function showPDF(filename) {
     document.getElementById("pdfViewer").innerHTML = `
         <iframe
-            src="./${encodeURIComponent(filename)}"
+            src="./safety/${filename}"
             width="100%"
             height="800px"
             style="border:1px solid #ccc; border-radius:8px;">
         </iframe>
     `;
 }
+
 
 
 </script>
