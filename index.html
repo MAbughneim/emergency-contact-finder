@@ -227,9 +227,16 @@ Use your location or select a town below.
 
                     <br><br>
 
-                    📍 ${location.address}
+📍
+<a
+    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+    target="_blank"
+    rel="noopener"
+>
+    ${location.address}
+</a>
 
-                    <br><br>
+<br><br>
 
                     📞
                     <a href="tel:${location.phone}">
@@ -409,8 +416,15 @@ Use your location or select a town below.
                                 🏥 ${location.type}
 
                                 <br><br>
-
-                                📍 ${location.address}
+📍
+<a
+    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+    target="_blank"
+    rel="noopener"
+>
+    ${location.address}
+</a>
+                         
 
                                 <br><br>
 
@@ -466,7 +480,16 @@ Use your location or select a town below.
 
                                 <br><br>
 
-                                📍 ${location.address}
+                              📍
+<a
+    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+    target="_blank"
+    rel="noopener"
+>
+    ${location.address}
+</a>
+
+
 
                                 <br><br>
 
