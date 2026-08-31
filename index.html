@@ -8,81 +8,382 @@
     <title>Medical Emergency Information</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-      h1 {
-    color: #222;
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #555;
-    margin-top: 0;
-}
-
-        
-
-        input,
-        select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
+        * {
             box-sizing: border-box;
-            font-size: 16px;
         }
 
-        button {
-            background: #0078D4;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #eef6ff 0%, #f8fbff 50%, #eef8f4 100%);
+            color: #222;
+            min-height: 100vh;
         }
 
-        button:hover {
-            background: #005a9e;
-        }
+        /* ==============================
+           MAIN CONTAINER
+        ============================== */
 
         #mainSection {
             display: block;
         }
 
-        #results {
-            margin-top: 25px;
+        .page-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 12px 40px rgba(0, 65, 120, 0.12);
+            border: 1px solid rgba(0, 120, 212, 0.08);
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e63946, #c1121f);
+            color: white;
+            border-radius: 50%;
+            font-size: 36px;
+            box-shadow: 0 8px 20px rgba(198, 18, 31, 0.25);
+        }
+
+        h1 {
+            color: #16324f;
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.15;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: #506070;
+            margin: 0;
+            font-size: 19px;
+            font-weight: 500;
+        }
+
+        h3 {
+            color: #16324f;
+            margin: 30px 0 18px;
+            font-size: 24px;
+        }
+
+        h4 {
+            color: #0078D4;
+            margin: 25px 0 12px;
+            font-size: 19px;
             text-align: left;
         }
 
-        .location {
-    margin-bottom: 20px;
-    padding: 18px;
-    border: 1px solid #d0d0d0;
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-    
-.location a {
-    color: #0078D4;
-    font-weight: bold;
-}
-
-.location button {
-    width: 100%;
-    margin-bottom: 10px;
-}
+        p {
+            color: #5b6875;
+            line-height: 1.6;
         }
 
+        /* ==============================
+           CONTROLS
+        ============================== */
+
+        .intro-text {
+            background: #f3f8fc;
+            border-left: 4px solid #0078D4;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px 16px;
+            margin: 10px 0;
+            border: 1px solid #cbd7e2;
+            border-radius: 10px;
+            background: white;
+            font-size: 16px;
+            color: #263746;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #0078D4;
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        button {
+            background: linear-gradient(135deg, #0078D4, #005fa8);
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 5px 14px rgba(0, 120, 212, 0.22);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #006bc0, #004f8c);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(0, 120, 212, 0.28);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .location-button {
+            width: 100%;
+            max-width: 400px;
+            font-size: 17px;
+            padding: 16px 20px;
+        }
+
+        .safety-button {
+            background: linear-gradient(135deg, #198754, #126c42);
+            width: 100%;
+            max-width: 400px;
+            font-size: 17px;
+            padding: 16px 20px;
+            box-shadow: 0 5px 14px rgba(25, 135, 84, 0.22);
+        }
+
+        .safety-button:hover {
+            background: linear-gradient(135deg, #157347, #0d5834);
+            box-shadow: 0 7px 18px rgba(25, 135, 84, 0.28);
+        }
+
+        /* ==============================
+           RESULTS
+        ============================== */
+
+        #results {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        #results > h3 {
+            text-align: center;
+        }
+
+        /* ==============================
+           LOCATION CARDS
+        ============================== */
+
+        .location {
+            margin-bottom: 20px;
+            padding: 22px;
+            border: 1px solid #dce5ed;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(180deg, #0078D4, #00a6fb);
+        }
+
+        .location:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+        }
+
+        .location strong {
+            display: block;
+            font-size: 20px;
+            color: #16324f;
+            margin-bottom: 4px;
+        }
+
+        .location a {
+            color: #0078D4;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .location a:hover {
+            text-decoration: underline;
+        }
+
+        .location button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .location hr {
+            border: none;
+            border-top: 1px solid #e4e9ee;
+            margin: 16px 0;
+        }
+
+        /* ==============================
+           INFO ROWS
+        ============================== */
+
+        .info-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .info-icon {
+            min-width: 24px;
+        }
+
+        .distance {
+            display: inline-block;
+            margin: 12px 0;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #eaf5ff;
+            color: #0065ad;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           SAFETY SECTION
+        ============================== */
+
+        .safety-card {
+            border-left-color: #198754;
+        }
+
+        .safety-card::before {
+            background: linear-gradient(180deg, #198754, #20a866);
+        }
+
+        .pdf-button {
+            background: #f4f8fb;
+            color: #16324f;
+            border: 1px solid #d6e1ea;
+            box-shadow: none;
+            text-align: left;
+        }
+
+        .pdf-button:hover {
+            background: #eaf4fb;
+            color: #0078D4;
+            border-color: #b9d8ee;
+        }
+
+        /* ==============================
+           ERROR MESSAGES
+        ============================== */
+
         .error {
-            color: red;
+            color: #b42318;
             font-weight: bold;
+            background: #fff1f0;
+            border: 1px solid #f5c2c0;
+            border-left: 5px solid #dc3545;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        /* ==============================
+           LOADING
+        ============================== */
+
+        .loading {
+            text-align: center;
+            padding: 25px;
+            background: #f4f9fd;
+            border-radius: 12px;
+            color: #506070;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8ee;
+            color: #7a8793;
+            font-size: 13px;
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px 10px 30px;
+            }
+
+            .page-container {
+                padding: 22px 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 29px;
+            }
+
+            h2 {
+                font-size: 17px;
+            }
+
+            .header-icon {
+                width: 62px;
+                height: 62px;
+                font-size: 30px;
+            }
+
+            .location {
+                padding: 18px;
+            }
+
+            .location strong {
+                font-size: 18px;
+            }
+
+            button,
+            input,
+            select {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -90,577 +391,723 @@ h2 {
 
 <body>
 
-    <h1> 🚨 Custom Electric Emergency & Safety Information </h1>
+    <div class="page-container">
+
+        <div class="header">
+
+            <div class="header-icon">
+                🚨
+            </div>
+
+            <h1>
+                Custom Electric Emergency & Safety Information
+            </h1>
+
+            <h2>
+                Medical Facilities, Safety Resources & SDS Documents
+            </h2>
+
+        </div>
 
 
-    <!-- MAIN -->
+        <!-- MAIN -->
 
-    <div id="mainSection">
+        <div id="mainSection">
 
-       <h2> Medical Facilities, Safety Resources & SDS Documents </h2>
-
-<p>
-Use your location or select a town below.
-</p>
-        <button onclick="getLocation()">
-            📍 Use My Location
-        </button>
-
-        <br><br>
+            <div class="intro-text">
+                <p>
+                    <strong>📍 Find emergency resources near you</strong><br>
+                    Use your location or select a town below.
+                </p>
+            </div>
 
 
-        <!-- TOWN DROPDOWN -->
+            <button
+                class="location-button"
+                onclick="getLocation()"
+            >
+                📍 Use My Location
+            </button>
 
-        <select id="townSelect">
+            <br><br>
 
-            <option value="">
-                Select Town
-            </option>
 
-</select>
+            <!-- TOWN DROPDOWN -->
 
-<br><br>
+            <select id="townSelect">
 
-<button onclick="showSafety()">
-🦺 Safety Information
-</button>
+                <option value="">
+                    Select Town
+                </option>
 
-<br><br>
-        <!-- RESULTS -->
+            </select>
 
-        <div id="results"></div>
+            <br><br>
+
+            <button
+                class="safety-button"
+                onclick="showSafety()"
+            >
+                🦺 Safety Information
+            </button>
+
+            <br><br>
+
+
+            <!-- RESULTS -->
+
+            <div id="results"></div>
+
+        </div>
+
+
+        <div class="footer">
+            Custom Electric • Emergency & Safety Information
+        </div>
 
     </div>
 
 
-   <!-- LOAD LOCATIONS.JS ONCE -->
+    <!-- LOAD LOCATIONS.JS ONCE -->
 
-<script src="locations.js"></script>
+    <script src="locations.js"></script>
 
-<script>
-
-
-
-    // =====================================
-    // CHECK LOCATIONS FILE
-    // =====================================
-
-    if (typeof locations === "undefined") {
-
-        document.getElementById("results").innerHTML =
-            "<p class='error'>ERROR: locations.js was not loaded.</p>";
-
-    }
+    <script>
 
 
-    // =====================================
-    // CREATE TOWN DROPDOWN
-    // =====================================
+        // =====================================
+        // CHECK LOCATIONS FILE
+        // =====================================
 
-    const townSelect =
-        document.getElementById("townSelect");
+        if (typeof locations === "undefined") {
 
+            document.getElementById("results").innerHTML =
+                "<p class='error'>ERROR: locations.js was not loaded.</p>";
 
-    if (typeof locations !== "undefined") {
-
-        const towns = [
-            ...new Set(
-                locations.map(function(location) {
-                    return location.town;
-                })
-            )
-        ].sort();
-
-
-        towns.forEach(function(town) {
-
-            const option =
-                document.createElement("option");
-
-            option.value = town;
-
-            option.textContent = town;
-
-            townSelect.appendChild(option);
-
-        });
-
-    }
-
-
-    // =====================================
-    // TOWN SELECTED
-    // =====================================
-
-    townSelect.addEventListener("change", function() {
-
- const selectedTown = this.value;
-
-const results =
-    document.getElementById("results");
-
-if (selectedTown === "") {
-
-    results.innerHTML = "";
-
-    return;
-
-}
-
-const townLocations =
-    locations.filter(function(location) {
-
-        return location.town.toLowerCase() ===
-               selectedTown.toLowerCase();
-
-    });
-
-let html =
-    "<h3>📍 Locations in " +
-    selectedTown +
-    "</h3>";
-
-townLocations.forEach(function(location) {
-
-    html += `
-
-        <div class="location">
-
-            <strong>
-                ${location.name}
-            </strong>
-
-            <br><br>
-
-            🏥 ${location.type}
-
-            <br><br>
-
-            📍
-            <a
-                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                ${location.address}
-            </a>
-
-            <hr style="margin:10px 0;">
-
-            🕒 Mon-Fri:
-            ${location.weekdayHours || "Not Available"}
-
-            <br><br>
-
-            🕒 Saturday:
-            ${location.saturdayHours || "Not Available"}
-
-            <br><br>
-
-            🕒 Sunday:
-            ${location.sundayHours || "Not Available"}
-
-            <br><br>
-📞
-tel:${location.phone}
-    ${location.phone}
-</a>
-
-            <br><br>
-
-            ${location.website}
-                🌐 Open Website
-            </a>
-
-        </div>
-
-    `;
-
-});
-
-results.innerHTML = html;
-        });
-    // =====================================
-    // USE MY LOCATION
-    // =====================================
-
-    function getLocation() {
-
-        const resultsDiv =
-            document.getElementById("results");
-
-
-        if (!navigator.geolocation) {
-
-            resultsDiv.innerHTML = `
-                <p class="error">
-                    Your browser does not support location services.
-                </p>
-            `;
-
-            return;
         }
 
 
-        resultsDiv.innerHTML = `
-            <h3>📍 Finding locations near you...</h3>
-            <p>Please wait...</p>
-        `;
+        // =====================================
+        // CREATE TOWN DROPDOWN
+        // =====================================
+
+        const townSelect =
+            document.getElementById("townSelect");
 
 
-        navigator.geolocation.getCurrentPosition(
+        if (typeof locations !== "undefined") {
 
-            function(position) {
-
-                const userLat =
-                    position.coords.latitude;
-
-                const userLon =
-                    position.coords.longitude;
-
-
-                // CALCULATE DISTANCES
-
-                const results = locations
-
-                    .filter(function(location) {
-
-                        return !isNaN(
-                            parseFloat(location.latitude)
-                        ) &&
-                        !isNaN(
-                            parseFloat(location.longitude)
-                        );
-
+            const towns = [
+                ...new Set(
+                    locations.map(function(location) {
+                        return location.town;
                     })
-
-                    .map(function(location) {
-
-                        const R = 3958.8;
-
-                        const lat1 =
-                            userLat * Math.PI / 180;
-
-                        const lat2 =
-                            location.latitude * Math.PI / 180;
-
-                        const dLat =
-                            (location.latitude - userLat)
-                            * Math.PI / 180;
-
-                        const dLon =
-                            (location.longitude - userLon)
-                            * Math.PI / 180;
+                )
+            ].sort();
 
 
-                        const a =
-                            Math.sin(dLat / 2) *
-                            Math.sin(dLat / 2) +
+            towns.forEach(function(town) {
 
-                            Math.cos(lat1) *
-                            Math.cos(lat2) *
-                            Math.sin(dLon / 2) *
-                            Math.sin(dLon / 2);
+                const option =
+                    document.createElement("option");
 
+                option.value = town;
 
-                        const c =
-                            2 * Math.atan2(
-                                Math.sqrt(a),
-                                Math.sqrt(1 - a)
-                            );
+                option.textContent = town;
 
+                townSelect.appendChild(option);
 
-                        return {
-                            ...location,
-                            distance: R * c
-                        };
+            });
 
-                    });
+        }
 
 
-                // SORT CLOSEST FIRST
+        // =====================================
+        // TOWN SELECTED
+        // =====================================
 
-                results.sort(function(a, b) {
+        townSelect.addEventListener("change", function() {
 
-                    return a.distance - b.distance;
+            const selectedTown = this.value;
+
+            const results =
+                document.getElementById("results");
+
+            if (selectedTown === "") {
+
+                results.innerHTML = "";
+
+                return;
+
+            }
+
+            const townLocations =
+                locations.filter(function(location) {
+
+                    return location.town.toLowerCase() ===
+                           selectedTown.toLowerCase();
 
                 });
 
+            let html =
+                "<h3>📍 Locations in " +
+                selectedTown +
+                "</h3>";
 
-                // GET CLOSEST 2 OF EACH
+            townLocations.forEach(function(location) {
 
-                const urgentCares =
-                    results
-                        .filter(function(location) {
-                            return location.type === "Urgent Care";
-                        })
-                        .slice(0, 2);
+                html += `
 
+                    <div class="location">
 
-                const emergencyRooms =
-                    results
-                        .filter(function(location) {
-                            return location.type === "Emergency Room";
-                        })
-                        .slice(0, 2);
+                        <strong>
+                            ${location.name}
+                        </strong>
 
+                        <div class="info-row">
+                            <span class="info-icon">🏥</span>
+                            <span>${location.type}</span>
+                        </div>
 
-                let html = `
-                    <h3>📍 Closest Emergency Locations</h3>
+                        <div class="info-row">
+                            <span class="info-icon">📍</span>
+                            <span>
+                                <a
+                                    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    ${location.address}
+                                </a>
+                            </span>
+                        </div>
+
+                        <hr>
+
+                        <div class="info-row">
+                            <span class="info-icon">🕒</span>
+                            <span>
+                                <strong style="font-size:14px;">
+                                    Mon-Fri:
+                                </strong>
+                                ${location.weekdayHours || "Not Available"}
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-icon">🕒</span>
+                            <span>
+                                <strong style="font-size:14px;">
+                                    Saturday:
+                                </strong>
+                                ${location.saturdayHours || "Not Available"}
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-icon">🕒</span>
+                            <span>
+                                <strong style="font-size:14px;">
+                                    Sunday:
+                                </strong>
+                                ${location.sundayHours || "Not Available"}
+                            </span>
+                        </div>
+
+                        <hr>
+
+                        <div class="info-row">
+                            <span class="info-icon">📞</span>
+                            <span>
+                                <a href="tel:${location.phone}">
+                                    ${location.phone}
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-icon">🌐</span>
+                            <span>
+                                ${location.website}
+                            </span>
+                        </div>
+
+                    </div>
+
                 `;
 
+            });
 
-                // URGENT CARE
+            results.innerHTML = html;
 
-                if (urgentCares.length > 0) {
+        });
 
-                    html += "<h4>Urgent Care</h4>";
 
-                    urgentCares.forEach(function(location) {
+        // =====================================
+        // USE MY LOCATION
+        // =====================================
 
-                        html += `
+        function getLocation() {
 
-                            <div class="location">
+            const resultsDiv =
+                document.getElementById("results");
 
-                                <strong>
-                                    ${location.name}
-                                </strong>
 
-                                <br><br>
+            if (!navigator.geolocation) {
 
-                                🏥 ${location.type}
+                resultsDiv.innerHTML = `
+                    <p class="error">
+                        📍 Your browser does not support location services.
+                    </p>
+                `;
 
-                                <br><br>
-📍
-<a
-    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-    target="_blank"
-    rel="noopener"
->
-    ${location.address}
-</a>
-                         
-
-                                <br><br>
-
-📏
-${location.distance.toFixed(1)}
-miles away
-
-<hr style="margin:10px 0;">
-
-🕒 Mon-Fri:
-${location.weekdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Saturday:
-${location.saturdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Sunday:
-${location.sundayHours || "Not Available"}
-
-<hr style="margin:10px 0;">
-
-📞
-                                <a href="tel:${location.phone}">
-                                    ${location.phone}
-                                </a>
-
-                                <br><br>
-
-                                <a
-                                    href="${location.website}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    🌐 Open Website
-                                </a>
-
-                            </div>
-
-                        `;
-
-                    });
-
-                }
-
-
-                // EMERGENCY ROOMS
-
-                if (emergencyRooms.length > 0) {
-
-                    html += "<h4>Emergency Rooms</h4>";
-
-                    emergencyRooms.forEach(function(location) {
-
-                        html += `
-
-                            <div class="location">
-
-                                <strong>
-                                    ${location.name}
-                                </strong>
-
-                                <br><br>
-
-                                🏥 ${location.type}
-
-                                <br><br>
-
-                              📍
-<a
-    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-    target="_blank"
-    rel="noopener"
->
-    ${location.address}
-</a>
-
-
-
-                                <br><br>
-
-                                📏
-                                ${location.distance.toFixed(1)}
-                                miles away
-
-                                
-<br><br>
-
-🕒 Mon-Fri:
-${location.weekdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Saturday:
-${location.saturdayHours || "Not Available"}
-
-<br><br>
-
-🕒 Sunday:
-${location.sundayHours || "Not Available"}
-
-<br><br>
-                                <br><br>
-
-                                📞
-                                <a href="tel:${location.phone}">
-                                    ${location.phone}
-                                </a>
-
-                                <br><br>
-
-                                <a
-                                    href="${location.website}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    🌐 Open Website
-                                </a>
-
-                            </div>
-
-                        `;
-
-                    });
-
-                }
-
-
-                resultsDiv.innerHTML = html;
-
-            },
-
-
-            function(error) {
-
-                if (error.code === 1) {
-
-                    resultsDiv.innerHTML = `
-                        <p class="error">
-                            📍 Location permission was denied.
-                            Please allow location access and try again.
-                        </p>
-                    `;
-
-                } else if (error.code === 2) {
-
-                    resultsDiv.innerHTML = `
-                        <p class="error">
-                            📍 Your location could not be determined.
-                            Please try again.
-                        </p>
-                    `;
-
-                } else if (error.code === 3) {
-
-                    resultsDiv.innerHTML = `
-                        <p class="error">
-                            📍 Location request timed out.
-                            Please try again.
-                        </p>
-                    `;
-
-                } else {
-
-                    resultsDiv.innerHTML = `
-                        <p class="error">
-                            📍 Unable to get your location.
-                        </p>
-                    `;
-
-                }
-
-            },
-
-
-            {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0
+                return;
             }
 
-        );
 
-    }
-function showSafety() {
-    document.getElementById("results").innerHTML = `
-        <h3>🦺 Safety Information</h3>
-
-        <div class="location">
-
-            <p>
-                <button onclick="showPDF('Safety Manual- Custom Electric Aug 2026.pdf')">
-                    📄 Safety Manual
-                </button>
-            </p>
-
-            <p>
-                <button onclick="showPDF('Safety Manual Table of Contents- Custom Electric May 2025.pdf')">
-                    📄 Safety Manual Table of Contents
-                </button>
-            </p>
-
-            <p>
-                <button onclick="showPDF('SDS Sheets- Custom Electric Aug 2026.pdf')">
-                    📄 SDS Sheets
-                </button>
-            </p>
-
-            <div id="pdfViewer" style="margin-top:20px;"></div>
-
-        </div>
-    `;
-}
-function showPDF(filename) {
-    window.open(`./safety/${filename}`, "_blank");
-}
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <h3>📍 Finding locations near you...</h3>
+                    <p>Please wait...</p>
+                </div>
+            `;
 
 
-</script>
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    const userLat =
+                        position.coords.latitude;
+
+                    const userLon =
+                        position.coords.longitude;
+
+
+                    // CALCULATE DISTANCES
+
+                    const results = locations
+
+                        .filter(function(location) {
+
+                            return !isNaN(
+                                parseFloat(location.latitude)
+                            ) &&
+                            !isNaN(
+                                parseFloat(location.longitude)
+                            );
+
+                        })
+
+                        .map(function(location) {
+
+                            const R = 3958.8;
+
+                            const lat1 =
+                                userLat * Math.PI / 180;
+
+                            const lat2 =
+                                location.latitude * Math.PI / 180;
+
+                            const dLat =
+                                (location.latitude - userLat)
+                                * Math.PI / 180;
+
+                            const dLon =
+                                (location.longitude - userLon)
+                                * Math.PI / 180;
+
+
+                            const a =
+                                Math.sin(dLat / 2) *
+                                Math.sin(dLat / 2) +
+
+                                Math.cos(lat1) *
+                                Math.cos(lat2) *
+                                Math.sin(dLon / 2) *
+                                Math.sin(dLon / 2);
+
+
+                            const c =
+                                2 * Math.atan2(
+                                    Math.sqrt(a),
+                                    Math.sqrt(1 - a)
+                                );
+
+
+                            return {
+                                ...location,
+                                distance: R * c
+                            };
+
+                        });
+
+
+                    // SORT CLOSEST FIRST
+
+                    results.sort(function(a, b) {
+
+                        return a.distance - b.distance;
+
+                    });
+
+
+                    // GET CLOSEST 2 OF EACH
+
+                    const urgentCares =
+                        results
+                            .filter(function(location) {
+                                return location.type === "Urgent Care";
+                            })
+                            .slice(0, 2);
+
+
+                    const emergencyRooms =
+                        results
+                            .filter(function(location) {
+                                return location.type === "Emergency Room";
+                            })
+                            .slice(0, 2);
+
+
+                    let html = `
+                        <h3>📍 Closest Emergency Locations</h3>
+                    `;
+
+
+                    // URGENT CARE
+
+                    if (urgentCares.length > 0) {
+
+                        html += "<h4>Urgent Care</h4>";
+
+                        urgentCares.forEach(function(location) {
+
+                            html += `
+
+                                <div class="location">
+
+                                    <strong>
+                                        ${location.name}
+                                    </strong>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🏥</span>
+                                        <span>${location.type}</span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">📍</span>
+                                        <span>
+                                            <a
+                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                ${location.address}
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <div class="distance">
+                                        📏 ${location.distance.toFixed(1)}
+                                        miles away
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Mon-Fri:
+                                            </strong>
+                                            ${location.weekdayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Saturday:
+                                            </strong>
+                                            ${location.saturdayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Sunday:
+                                            </strong>
+                                            ${location.sundayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">📞</span>
+                                        <span>
+                                            <a href="tel:${location.phone}">
+                                                ${location.phone}
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🌐</span>
+                                        <span>
+                                            <a
+                                                href="${location.website}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                Open Website
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        });
+
+                    }
+
+
+                    // EMERGENCY ROOMS
+
+                    if (emergencyRooms.length > 0) {
+
+                        html += "<h4>Emergency Rooms</h4>";
+
+                        emergencyRooms.forEach(function(location) {
+
+                            html += `
+
+                                <div class="location">
+
+                                    <strong>
+                                        ${location.name}
+                                    </strong>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🏥</span>
+                                        <span>${location.type}</span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">📍</span>
+                                        <span>
+                                            <a
+                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                ${location.address}
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <div class="distance">
+                                        📏 ${location.distance.toFixed(1)}
+                                        miles away
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Mon-Fri:
+                                            </strong>
+                                            ${location.weekdayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Saturday:
+                                            </strong>
+                                            ${location.saturdayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🕒</span>
+                                        <span>
+                                            <strong style="font-size:14px;">
+                                                Sunday:
+                                            </strong>
+                                            ${location.sundayHours || "Not Available"}
+                                        </span>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">📞</span>
+                                        <span>
+                                            <a href="tel:${location.phone}">
+                                                ${location.phone}
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span class="info-icon">🌐</span>
+                                        <span>
+                                            <a
+                                                href="${location.website}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                Open Website
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        });
+
+                    }
+
+
+                    resultsDiv.innerHTML = html;
+
+                },
+
+
+                function(error) {
+
+                    if (error.code === 1) {
+
+                        resultsDiv.innerHTML = `
+                            <p class="error">
+                                📍 Location permission was denied.
+                                Please allow location access and try again.
+                            </p>
+                        `;
+
+                    } else if (error.code === 2) {
+
+                        resultsDiv.innerHTML = `
+                            <p class="error">
+                                📍 Your location could not be determined.
+                                Please try again.
+                            </p>
+                        `;
+
+                    } else if (error.code === 3) {
+
+                        resultsDiv.innerHTML = `
+                            <p class="error">
+                                📍 Location request timed out.
+                                Please try again.
+                            </p>
+                        `;
+
+                    } else {
+
+                        resultsDiv.innerHTML = `
+                            <p class="error">
+                                📍 Unable to get your location.
+                            </p>
+                        `;
+
+                    }
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+
+            );
+
+        }
+
+
+        // =====================================
+        // SAFETY INFORMATION
+        // =====================================
+
+        function showSafety() {
+
+            document.getElementById("results").innerHTML = `
+
+                <h3>🦺 Safety Information</h3>
+
+                <div class="location safety-card">
+
+                    <p>
+                        Access the Custom Electric safety manuals and
+                        Safety Data Sheet documents below.
+                    </p>
+
+                    <p>
+                        <button
+                            class="pdf-button"
+                            onclick="showPDF('Safety Manual- Custom Electric Aug 2026.pdf')"
+                        >
+                            📄 Safety Manual
+                        </button>
+                    </p>
+
+                    <p>
+                        <button
+                            class="pdf-button"
+                            onclick="showPDF('Safety Manual Table of Contents- Custom Electric May 2025.pdf')"
+                        >
+                            📄 Safety Manual Table of Contents
+                        </button>
+                    </p>
+
+                    <p>
+                        <button
+                            class="pdf-button"
+                            onclick="showPDF('SDS Sheets- Custom Electric Aug 2026.pdf')"
+                        >
+                            📄 SDS Sheets
+                        </button>
+                    </p>
+
+                    <div
+                        id="pdfViewer"
+                        style="margin-top:20px;"
+                    ></div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        function showPDF(filename) {
+
+            window.open(
+                `./safety/${filename}`,
+                "_blank"
+            );
+
+        }
+
+
+    </script>
 
 </body>
 </html>
