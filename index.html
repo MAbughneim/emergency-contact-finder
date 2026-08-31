@@ -559,29 +559,44 @@ Use your location or select a town below.
 function showSafety() {
     document.getElementById("results").innerHTML = `
         <h3>🦺 Safety Information</h3>
+
         <div class="location">
 
             <p>
-                <a href="./safety/Safety Manual- Custom Aug 2026.pdf
+                <button onclick="showPDF('Safety Manual- Custom Electric Aug 2026.pdf')">
                     📄 Safety Manual
-                </a>
+                </button>
             </p>
 
             <p>
-                <a href="./safety/Safety Manual Table of Contents- ectric May 2025.pdf
+                <button onclick="showPDF('Safety Manual Table of Contents- Custom Electric May 2025.pdf')">
                     📄 Safety Manual Table of Contents
-                </a>
+                </button>
             </p>
 
             <p>
-                <a href="./S Sheets- Custom Electric Aug 2026.pdf
+                <button onclick="showPDF('SDS Sheets- Custom Electric Aug 2026.pdf')">
                     📄 SDS Sheets
-                </a>
+                </button>
             </p>
+
+            <div id="pdfViewer" style="margin-top:20px;"></div>
 
         </div>
     `;
 }
+
+function showPDF(filename) {
+    document.getElementById("pdfViewer").innerHTML = `
+        <iframe
+            src="./${encodeURIComponent(filename)}"
+            width="100%"
+            height="800px"
+            style="border:1px solid #ccc; border-radius:8px;">
+        </iframe>
+    `;
+}
+
 
 </script>
 
