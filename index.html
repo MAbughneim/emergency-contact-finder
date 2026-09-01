@@ -571,12 +571,32 @@
 
                         <div class="info-row">
                             <span class="info-icon">📍</span>
-                            <span>
-                                <a
-                                    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
+
+                                <div>
+
+                                <strong style="font-size:14px;">
+                                ${location.address}
+                                </strong>
+
+                                <br><br>
+
+                                    <a
+                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                🗺️ Google Maps
+                            </a>
+
+                            &nbsp;|&nbsp;
+
+        <a
+            href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
+ ps
+        </a>
+
+    </div>
+</div>
                                     ${location.address}
                                 </a>
                             </span>
@@ -796,18 +816,34 @@
                                         <span>${location.type}</span>
                                     </div>
 
-                                    <div class="info-row">
-                                        <span class="info-icon">📍</span>
-                                        <span>
-                                            <a
-                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener"
-                                            >
-                                                ${location.address}
-                                            </a>
-                                        </span>
-                                    </div>
+                                <div class="info-row">
+    <span class="info-icon">📍</span>
+
+    <div>
+
+        <strong style="font-size:14px;">
+            ${location.address}
+        </strong>
+
+        <br><br>
+
+        <a
+            href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            🗺️ Google Maps
+        </a>
+
+        &nbsp;|&nbsp;
+
+        <a
+            href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
+ ps
+        </a>
+
+    </div>
+</div>
 
                                     <div class="distance">
                                         📏 ${location.distance.toFixed(1)}
@@ -901,17 +937,33 @@
                                     </div>
 
                                     <div class="info-row">
-                                        <span class="info-icon">📍</span>
-                                        <span>
-                                            <a
-                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener"
-                                            >
-                                                ${location.address}
-                                            </a>
-                                        </span>
-                                    </div>
+    <span class="info-icon">📍</span>
+
+    <div>
+
+        <strong style="font-size:14px;">
+            ${location.address}
+        </strong>
+
+        <br><br>
+
+        <a
+            href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            🗺️ Google Maps
+        </a>
+
+        &nbsp;|&nbsp;
+
+        <a
+            href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
+ ps
+        </a>
+
+    </div>
+</div>
 
                                     <div class="distance">
                                         📏 ${location.distance.toFixed(1)}
