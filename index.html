@@ -2,12 +2,14 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Medical Emergency Information</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -18,14 +20,15 @@
             margin: 0 auto;
             padding: 30px 20px 50px;
             text-align: center;
-            background: linear-gradient(135deg, #eef6ff 0%, #f8fbff 50%, #eef8f4 100%);
+            background: linear-gradient(
+                135deg,
+                #eef6ff 0%,
+                #f8fbff 50%,
+                #eef8f4 100%
+            );
             color: #222;
             min-height: 100vh;
         }
-
-        /* ==============================
-           MAIN CONTAINER
-        ============================== */
 
         #mainSection {
             display: block;
@@ -39,9 +42,7 @@
             border: 1px solid rgba(0, 120, 212, 0.08);
         }
 
-        /* ==============================
-           HEADER
-        ============================== */
+        /* HEADER */
 
         .header {
             margin-bottom: 30px;
@@ -94,9 +95,7 @@
             line-height: 1.6;
         }
 
-        /* ==============================
-           CONTROLS
-        ============================== */
+        /* INTRO */
 
         .intro-text {
             background: #f3f8fc;
@@ -106,6 +105,8 @@
             margin: 25px 0;
             text-align: left;
         }
+
+        /* INPUTS */
 
         input,
         select {
@@ -131,12 +132,15 @@
             cursor: pointer;
         }
 
-        /* ==============================
-           BUTTONS
-        ============================== */
+        /* BUTTONS */
 
         button {
-            background: linear-gradient(135deg, #0078D4, #005fa8);
+            background: linear-gradient(
+                135deg,
+                #0078D4,
+                #005fa8
+            );
+
             color: white;
             border: none;
             padding: 14px 22px;
@@ -144,14 +148,24 @@
             border-radius: 10px;
             font-size: 16px;
             font-weight: 700;
-            box-shadow: 0 5px 14px rgba(0, 120, 212, 0.22);
+
+            box-shadow:
+                0 5px 14px rgba(0, 120, 212, 0.22);
+
             transition: all 0.2s ease;
         }
 
         button:hover {
-            background: linear-gradient(135deg, #006bc0, #004f8c);
+            background: linear-gradient(
+                135deg,
+                #006bc0,
+                #004f8c
+            );
+
             transform: translateY(-2px);
-            box-shadow: 0 7px 18px rgba(0, 120, 212, 0.28);
+
+            box-shadow:
+                0 7px 18px rgba(0, 120, 212, 0.28);
         }
 
         button:active {
@@ -166,22 +180,33 @@
         }
 
         .safety-button {
-            background: linear-gradient(135deg, #198754, #126c42);
+            background: linear-gradient(
+                135deg,
+                #198754,
+                #126c42
+            );
+
             width: 100%;
             max-width: 400px;
             font-size: 17px;
             padding: 16px 20px;
-            box-shadow: 0 5px 14px rgba(25, 135, 84, 0.22);
+
+            box-shadow:
+                0 5px 14px rgba(25, 135, 84, 0.22);
         }
 
         .safety-button:hover {
-            background: linear-gradient(135deg, #157347, #0d5834);
-            box-shadow: 0 7px 18px rgba(25, 135, 84, 0.28);
+            background: linear-gradient(
+                135deg,
+                #157347,
+                #0d5834
+            );
+
+            box-shadow:
+                0 7px 18px rgba(25, 135, 84, 0.28);
         }
 
-        /* ==============================
-           RESULTS
-        ============================== */
+        /* RESULTS */
 
         #results {
             margin-top: 30px;
@@ -192,35 +217,49 @@
             text-align: center;
         }
 
-        /* ==============================
-           LOCATION CARDS
-        ============================== */
+        /* LOCATION CARD */
 
         .location {
             margin-bottom: 20px;
             padding: 22px;
+
             border: 1px solid #dce5ed;
             border-radius: 15px;
+
             background: #ffffff;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.07);
+
             transition: all 0.2s ease;
+
             position: relative;
             overflow: hidden;
         }
 
         .location::before {
             content: "";
+
             position: absolute;
+
             left: 0;
             top: 0;
             bottom: 0;
+
             width: 5px;
-            background: linear-gradient(180deg, #0078D4, #00a6fb);
+
+            background: linear-gradient(
+                180deg,
+                #0078D4,
+                #00a6fb
+            );
         }
 
         .location:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.10);
         }
 
         .location strong {
@@ -240,20 +279,13 @@
             text-decoration: underline;
         }
 
-        .location button {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
         .location hr {
             border: none;
             border-top: 1px solid #e4e9ee;
             margin: 16px 0;
         }
 
-        /* ==============================
-           INFO ROWS
-        ============================== */
+        /* INFO ROWS */
 
         .info-row {
             display: flex;
@@ -267,35 +299,31 @@
             min-width: 24px;
         }
 
-        .distance {
-            display: inline-block;
-            margin: 12px 0;
-            padding: 7px 12px;
-            border-radius: 20px;
-            background: #eaf5ff;
-            color: #0065ad;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        /* ==============================
-           SAFETY SECTION
-        ============================== */
+        /* SAFETY */
 
         .safety-card {
             border-left-color: #198754;
         }
 
         .safety-card::before {
-            background: linear-gradient(180deg, #198754, #20a866);
+            background: linear-gradient(
+                180deg,
+                #198754,
+                #20a866
+            );
         }
 
         .pdf-button {
             background: #f4f8fb;
             color: #16324f;
+
             border: 1px solid #d6e1ea;
+
             box-shadow: none;
+
             text-align: left;
+
+            width: 100%;
         }
 
         .pdf-button:hover {
@@ -304,47 +332,52 @@
             border-color: #b9d8ee;
         }
 
-        /* ==============================
-           ERROR MESSAGES
-        ============================== */
+        /* ERROR */
 
         .error {
             color: #b42318;
             font-weight: bold;
+
             background: #fff1f0;
+
             border: 1px solid #f5c2c0;
+
             border-left: 5px solid #dc3545;
+
             border-radius: 10px;
+
             padding: 16px;
         }
 
-        /* ==============================
-           LOADING
-        ============================== */
+        /* LOADING */
 
         .loading {
             text-align: center;
+
             padding: 25px;
+
             background: #f4f9fd;
+
             border-radius: 12px;
+
             color: #506070;
         }
 
-        /* ==============================
-           FOOTER
-        ============================== */
+        /* FOOTER */
 
         .footer {
             margin-top: 30px;
+
             padding-top: 20px;
+
             border-top: 1px solid #e2e8ee;
+
             color: #7a8793;
+
             font-size: 13px;
         }
 
-        /* ==============================
-           MOBILE
-        ============================== */
+        /* MOBILE */
 
         @media (max-width: 600px) {
 
@@ -385,13 +418,17 @@
                 font-size: 16px;
             }
         }
+
     </style>
+
 </head>
 
 
 <body>
 
     <div class="page-container">
+
+        <!-- HEADER -->
 
         <div class="header">
 
@@ -414,25 +451,41 @@
 
         <div id="mainSection">
 
+
             <div class="intro-text">
+
                 <p>
-                    <strong>📍 Find emergency resources near you</strong><br>
+
+                    <strong>
+                        📍 Find emergency resources near you
+                    </strong>
+
+                    <br>
+
                     Use your location or select a town below.
+
                 </p>
+
             </div>
 
+
+            <!-- USE MY LOCATION -->
 
             <button
                 class="location-button"
                 onclick="getLocation()"
             >
+
                 📍 Use My Location
+
             </button>
 
-            <br><br>
+
+            <br>
+            <br>
 
 
-            <!-- TOWN DROPDOWN -->
+            <!-- TOWN -->
 
             <select id="townSelect">
 
@@ -442,54 +495,71 @@
 
             </select>
 
-            <br><br>
+
+            <br>
+            <br>
+
+
+            <!-- SAFETY -->
 
             <button
                 class="safety-button"
                 onclick="showSafety()"
             >
+
                 🦺 Safety Information
+
             </button>
 
-            <br><br>
+
+            <br>
+            <br>
 
 
             <!-- RESULTS -->
 
             <div id="results"></div>
 
+
         </div>
 
 
+        <!-- FOOTER -->
+
         <div class="footer">
+
             Custom Electric • Emergency & Safety Information
+
         </div>
 
     </div>
 
 
-    <!-- LOAD LOCATIONS.JS ONCE -->
+    <!-- LOAD LOCATIONS -->
 
     <script src="locations.js"></script>
 
+
     <script>
 
-
-        // =====================================
+        // =====================================================
         // CHECK LOCATIONS FILE
-        // =====================================
+        // =====================================================
 
         if (typeof locations === "undefined") {
 
             document.getElementById("results").innerHTML =
-                "<p class='error'>ERROR: locations.js was not loaded.</p>";
+
+                "<p class='error'>" +
+                "ERROR: locations.js was not loaded." +
+                "</p>";
 
         }
 
 
-        // =====================================
-        // CREATE TOWN DROPDOWN
-        // =====================================
+        // =====================================================
+        // TOWN DROPDOWN
+        // =====================================================
 
         const townSelect =
             document.getElementById("townSelect");
@@ -498,11 +568,21 @@
         if (typeof locations !== "undefined") {
 
             const towns = [
+
                 ...new Set(
-                    locations.map(function(location) {
-                        return location.town;
-                    })
+
+                    locations
+
+                        .map(function(location) {
+
+                            return location.town;
+
+                        })
+
+                        .filter(Boolean)
+
                 )
+
             ].sort();
 
 
@@ -511,9 +591,12 @@
                 const option =
                     document.createElement("option");
 
+
                 option.value = town;
 
+
                 option.textContent = town;
+
 
                 townSelect.appendChild(option);
 
@@ -522,520 +605,666 @@
         }
 
 
-        // =====================================
-        // TOWN SELECTED
-        // =====================================
+        // =====================================================
+        // CREATE LOCATION CARD
+        // =====================================================
 
-        townSelect.addEventListener("change", function() {
+        function createLocationCard(
+            location,
+            userCoordinates = null
+        ) {
 
-            const selectedTown = this.value;
 
-            const results =
-                document.getElementById("results");
+            /*
+             * IMPORTANT:
+             *
+             * The medical facility address is now the
+             * destination.
+             *
+             * Facility latitude/longitude are NOT used.
+             */
 
-            if (selectedTown === "") {
 
-                results.innerHTML = "";
+            const address =
+                location.address ||
+                "Address not available";
 
-                return;
+
+            const encodedAddress =
+                encodeURIComponent(address);
+
+
+            // -------------------------------------------------
+            // GOOGLE MAPS
+            // -------------------------------------------------
+
+            let googleMapsUrl =
+
+                "https://www.google.com/maps/dir/?api=1" +
+
+                "&destination=" +
+
+                encodedAddress;
+
+
+            // -------------------------------------------------
+            // APPLE MAPS
+            // -------------------------------------------------
+
+            let appleMapsUrl =
+
+                "https://maps.apple.com/?daddr=" +
+
+                encodedAddress;
+
+
+            // -------------------------------------------------
+            // IF USER LOCATION IS AVAILABLE
+            // -------------------------------------------------
+
+            if (userCoordinates) {
+
+
+                const origin =
+
+                    userCoordinates.latitude +
+                    "," +
+                    userCoordinates.longitude;
+
+
+                googleMapsUrl =
+
+                    "https://www.google.com/maps/dir/?api=1" +
+
+                    "&origin=" +
+
+                    encodeURIComponent(origin) +
+
+                    "&destination=" +
+
+                    encodedAddress;
+
+
+                appleMapsUrl =
+
+                    "https://maps.apple.com/?saddr=" +
+
+                    encodeURIComponent(origin) +
+
+                    "&daddr=" +
+
+                    encodedAddress;
 
             }
 
-            const townLocations =
-                locations.filter(function(location) {
 
-                    return location.town.toLowerCase() ===
-                           selectedTown.toLowerCase();
+            // -------------------------------------------------
+            // WEBSITE
+            // -------------------------------------------------
 
-                });
+            let websiteHTML =
 
-            let html =
-                "<h3>📍 Locations in " +
-                selectedTown +
-                "</h3>";
+                "Website not available";
 
-            townLocations.forEach(function(location) {
 
-                html += `
+            if (location.website) {
 
-                    <div class="location">
+                websiteHTML = `
 
-                        <strong>
-                            ${location.name}
-                        </strong>
+                    <a
+                        href="${location.website}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open Website
+                    </a>
 
-                        <div class="info-row">
-                            <span class="info-icon">🏥</span>
-                            <span>${location.type}</span>
-                        </div>
+                `;
 
-                        <div class="info-row">
-                            <span class="info-icon">📍</span>
+            }
 
-                            <div>
 
-                                <strong style="font-size:14px;">
-                                    ${location.address}
-                                </strong>
+            // -------------------------------------------------
+            // RETURN CARD
+            // -------------------------------------------------
 
-                                <br><br>
+            return `
 
-                                <a
-                                    href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    🗺️ Google Maps
-                                </a>
+                <div class="location">
 
-                                &nbsp;|&nbsp;
 
-                                <a
-                                    href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    🍎 Apple Maps
-                                </a>
+                    <strong>
 
-                            </div>
-                        </div>
+                        ${location.name ||
+                        "Medical Facility"}
 
-                        <hr>
+                    </strong>
 
-                        <div class="info-row">
-                            <span class="info-icon">🕒</span>
-                            <span>
-                                <strong style="font-size:14px;">
-                                    Mon-Fri:
-                                </strong>
-                                ${location.weekdayHours || "Not Available"}
-                            </span>
-                        </div>
 
-                        <div class="info-row">
-                            <span class="info-icon">🕒</span>
-                            <span>
-                                <strong style="font-size:14px;">
-                                    Saturday:
-                                </strong>
-                                ${location.saturdayHours || "Not Available"}
-                            </span>
-                        </div>
+                    <!-- TYPE -->
 
-                        <div class="info-row">
-                            <span class="info-icon">🕒</span>
-                            <span>
-                                <strong style="font-size:14px;">
-                                    Sunday:
-                                </strong>
-                                ${location.sundayHours || "Not Available"}
-                            </span>
-                        </div>
+                    <div class="info-row">
 
-                        <hr>
+                        <span class="info-icon">
+                            🏥
+                        </span>
 
-                        <div class="info-row">
-                            <span class="info-icon">📞</span>
-                            <span>
-                                <a href="tel:${location.phone}">
-                                    ${location.phone}
-                                </a>
-                            </span>
-                        </div>
+                        <span>
 
-                        <div class="info-row">
-                            <span class="info-icon">🌐</span>
-                            <span>
-                                ${location.website}
-                            </span>
+                            ${location.type ||
+                            "Medical Facility"}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            📍
+                        </span>
+
+
+                        <div>
+
+
+                            <strong
+                                style="font-size:14px;"
+                            >
+
+                                ${address}
+
+                            </strong>
+
+
+                            <br>
+                            <br>
+
+
+                            <!-- GOOGLE MAPS -->
+
+                            <a
+                                href="${googleMapsUrl}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                🗺️ Google Maps
+
+                            </a>
+
+
+                            &nbsp;|&nbsp;
+
+
+                            <!-- APPLE MAPS -->
+
+                            <a
+                                href="${appleMapsUrl}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                🍎 Apple Maps
+
+                            </a>
+
+
                         </div>
 
                     </div>
 
+
+                    <hr>
+
+
+                    <!-- WEEKDAY -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            🕒
+                        </span>
+
+                        <span>
+
+                            <strong
+                                style="font-size:14px;"
+                            >
+
+                                Mon-Fri:
+
+                            </strong>
+
+                            ${location.weekdayHours ||
+                            "Not Available"}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- SATURDAY -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            🕒
+                        </span>
+
+                        <span>
+
+                            <strong
+                                style="font-size:14px;"
+                            >
+
+                                Saturday:
+
+                            </strong>
+
+                            ${location.saturdayHours ||
+                            "Not Available"}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- SUNDAY -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            🕒
+                        </span>
+
+                        <span>
+
+                            <strong
+                                style="font-size:14px;"
+                            >
+
+                                Sunday:
+
+                            </strong>
+
+                            ${location.sundayHours ||
+                            "Not Available"}
+
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- PHONE -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            📞
+                        </span>
+
+                        <span>
+
+                            ${
+                                location.phone
+                                ?
+
+                                `<a
+                                    href="tel:${location.phone}"
+                                >
+                                    ${location.phone}
+                                </a>`
+
+                                :
+
+                                "Phone not available"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- WEBSITE -->
+
+                    <div class="info-row">
+
+                        <span class="info-icon">
+                            🌐
+                        </span>
+
+                        <span>
+
+                            ${websiteHTML}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // TOWN SELECTED
+        // =====================================================
+
+        townSelect.addEventListener(
+            "change",
+            function() {
+
+
+                const selectedTown =
+                    this.value;
+
+
+                const results =
+                    document.getElementById(
+                        "results"
+                    );
+
+
+                // Nothing selected
+
+                if (selectedTown === "") {
+
+                    results.innerHTML = "";
+
+                    return;
+
+                }
+
+
+                // Find locations in town
+
+                const townLocations =
+                    locations.filter(
+                        function(location) {
+
+                            return (
+
+                                location.town &&
+
+                                location.town
+                                    .toLowerCase() ===
+                                selectedTown
+                                    .toLowerCase()
+
+                            );
+
+                        }
+                    );
+
+
+                let html = `
+
+                    <h3>
+                        📍 Locations in
+                        ${selectedTown}
+                    </h3>
+
                 `;
 
-            });
 
-            results.innerHTML = html;
+                if (townLocations.length === 0) {
 
-        });
+                    html += `
+
+                        <p class="error">
+
+                            No medical locations
+                            were found for this town.
+
+                        </p>
+
+                    `;
+
+                }
 
 
-        // =====================================
+                else {
+
+                    townLocations.forEach(
+                        function(location) {
+
+                            html +=
+                                createLocationCard(
+                                    location
+                                );
+
+                        }
+                    );
+
+                }
+
+
+                results.innerHTML = html;
+
+            }
+        );
+
+
+        // =====================================================
         // USE MY LOCATION
-        // =====================================
+        // =====================================================
 
         function getLocation() {
 
-            const resultsDiv =
-                document.getElementById("results");
 
+            const resultsDiv =
+                document.getElementById(
+                    "results"
+                );
+
+
+            // Browser doesn't support GPS
 
             if (!navigator.geolocation) {
 
                 resultsDiv.innerHTML = `
+
                     <p class="error">
-                        📍 Your browser does not support location services.
+
+                        📍 Your browser does not
+                        support location services.
+
                     </p>
+
                 `;
 
                 return;
+
             }
 
 
+            // Loading message
+
             resultsDiv.innerHTML = `
+
                 <div class="loading">
-                    <h3>📍 Finding locations near you...</h3>
-                    <p>Please wait...</p>
+
+                    <h3>
+                        📍 Getting your location...
+                    </h3>
+
+                    <p>
+                        Please wait...
+                    </p>
+
                 </div>
+
             `;
 
+
+            // Get user's location
 
             navigator.geolocation.getCurrentPosition(
 
                 function(position) {
 
-                    const userLat =
-                        position.coords.latitude;
 
-                    const userLon =
-                        position.coords.longitude;
+                    /*
+                     * These coordinates belong ONLY
+                     * to the USER.
+                     *
+                     * They are NOT used as the medical
+                     * facility destination.
+                     */
 
+                    const userCoordinates = {
 
-                    // CALCULATE DISTANCES
+                        latitude:
+                            position.coords.latitude,
 
-                    const results = locations
+                        longitude:
+                            position.coords.longitude
 
-                        .filter(function(location) {
-
-                            return !isNaN(
-                                parseFloat(location.latitude)
-                            ) &&
-                            !isNaN(
-                                parseFloat(location.longitude)
-                            );
-
-                        })
-
-                        .map(function(location) {
-
-                            const R = 3958.8;
-
-                            const lat1 =
-                                userLat * Math.PI / 180;
-
-                            const lat2 =
-                                location.latitude * Math.PI / 180;
-
-                            const dLat =
-                                (location.latitude - userLat)
-                                * Math.PI / 180;
-
-                            const dLon =
-                                (location.longitude - userLon)
-                                * Math.PI / 180;
+                    };
 
 
-                            const a =
-                                Math.sin(dLat / 2) *
-                                Math.sin(dLat / 2) +
-
-                                Math.cos(lat1) *
-                                Math.cos(lat2) *
-                                Math.sin(dLon / 2) *
-                                Math.sin(dLon / 2);
-
-
-                            const c =
-                                2 * Math.atan2(
-                                    Math.sqrt(a),
-                                    Math.sqrt(1 - a)
-                                );
-
-
-                            return {
-                                ...location,
-                                distance: R * c
-                            };
-
-                        });
-
-
-                    // SORT CLOSEST FIRST
-
-                    results.sort(function(a, b) {
-
-                        return a.distance - b.distance;
-
-                    });
-
-
-                    // GET CLOSEST 2 OF EACH
+                    // Find urgent care
 
                     const urgentCares =
-                        results
-                            .filter(function(location) {
-                                return location.type === "Urgent Care";
-                            })
-                            .slice(0, 2);
+                        locations.filter(
+                            function(location) {
 
+                                return (
+                                    location.type ===
+                                    "Urgent Care"
+                                );
+
+                            }
+                        );
+
+
+                    // Find emergency rooms
 
                     const emergencyRooms =
-                        results
-                            .filter(function(location) {
-                                return location.type === "Emergency Room";
-                            })
-                            .slice(0, 2);
+                        locations.filter(
+                            function(location) {
+
+                                return (
+                                    location.type ===
+                                    "Emergency Room"
+                                );
+
+                            }
+                        );
 
 
                     let html = `
-                        <h3>📍 Closest Emergency Locations</h3>
+
+                        <h3>
+                            📍 Emergency Locations
+                        </h3>
+
+
+                        <p>
+
+                            Your current location will
+                            be used as the starting point
+                            for directions.
+
+                        </p>
+
                     `;
 
 
+                    // =================================================
                     // URGENT CARE
+                    // =================================================
 
                     if (urgentCares.length > 0) {
 
-                        html += "<h4>Urgent Care</h4>";
 
-                        urgentCares.forEach(function(location) {
+                        html += `
 
-                            html += `
+                            <h4>
+                                Urgent Care
+                            </h4>
 
-                                <div class="location">
+                        `;
 
-                                    <strong>
-                                        ${location.name}
-                                    </strong>
 
-                                    <div class="info-row">
-                                        <span class="info-icon">🏥</span>
-                                        <span>${location.type}</span>
-                                    </div>
+                        urgentCares.forEach(
+                            function(location) {
 
-                                    <div class="info-row">
-                                        <span class="info-icon">📍</span>
+                                html +=
+                                    createLocationCard(
+                                        location,
+                                        userCoordinates
+                                    );
 
-                                        <div>
-
-                                            <strong style="font-size:14px;">
-                                                ${location.address}
-                                            </strong>
-
-                                            <br><br>
-
-                                            <a
-                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                🗺️ Google Maps
-                                            </a>
-
-                                            &nbsp;|&nbsp;
-
-                                            <a
-                                                href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                🍎 Apple Maps
-                                            </a>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="distance">
-                                        📏 ${location.distance.toFixed(1)}
-                                        miles away
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Mon-Fri:
-                                            </strong>
-                                            ${location.weekdayHours || "Not Available"}
-                                        </span>
-                                    </div>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Saturday:
-                                            </strong>
-                                            ${location.saturdayHours || "Not Available"}
-                                        </span>
-                                    </div>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Sunday:
-                                            </strong>
-                                            ${location.sundayHours || "Not Available"}
-                                        </span>
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">📞</span>
-                                        <span>
-                                            <a href="tel:${location.phone}">
-                                                ${location.phone}
-                                            </a>
-                                        </span>
-                                    </div>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">🌐</span>
-                                        <span>
-                                            <a
-                                                href="${location.website}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                Open Website
-                                            </a>
-                                        </span>
-                                    </div>
-
-                                </div>
-
-                            `;
-
-                        });
+                            }
+                        );
 
                     }
 
 
+                    // =================================================
                     // EMERGENCY ROOMS
+                    // =================================================
 
                     if (emergencyRooms.length > 0) {
 
-                        html += "<h4>Emergency Rooms</h4>";
 
-                        emergencyRooms.forEach(function(location) {
+                        html += `
 
-                            html += `
+                            <h4>
+                                Emergency Rooms
+                            </h4>
 
-                                <div class="location">
+                        `;
 
-                                    <strong>
-                                        ${location.name}
-                                    </strong>
 
-                                    <div class="info-row">
-                                        <span class="info-icon">🏥</span>
-                                        <span>${location.type}</span>
-                                    </div>
+                        emergencyRooms.forEach(
+                            function(location) {
 
-                                    <div class="info-row">
-                                        <span class="info-icon">📍</span>
+                                html +=
+                                    createLocationCard(
+                                        location,
+                                        userCoordinates
+                                    );
 
-                                        <div>
+                            }
+                        );
 
-                                            <strong style="font-size:14px;">
-                                                ${location.address}
-                                            </strong>
+                    }
 
-                                            <br><br>
 
-                                            <a
-                                                href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                🗺️ Google Maps
-                                            </a>
+                    // =================================================
+                    // NO RESULTS
+                    // =================================================
 
-                                            &nbsp;|&nbsp;
+                    if (
 
-                                            <a
-                                                href="https://maps.apple.com/?daddr=${location.latitude},${location.longitude}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                🍎 Apple Maps
-                                            </a>
+                        urgentCares.length === 0 &&
 
-                                        </div>
-                                    </div>
+                        emergencyRooms.length === 0
 
-                                    <div class="distance">
-                                        📏 ${location.distance.toFixed(1)}
-                                        miles away
-                                    </div>
+                    ) {
 
-                                    <hr>
+                        html += `
 
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Mon-Fri:
-                                            </strong>
-                                            ${location.weekdayHours || "Not Available"}
-                                        </span>
-                                    </div>
+                            <p class="error">
 
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Saturday:
-                                            </strong>
-                                            ${location.saturdayHours || "Not Available"}
-                                        </span>
-                                    </div>
+                                No emergency locations
+                                were found.
 
-                                    <div class="info-row">
-                                        <span class="info-icon">🕒</span>
-                                        <span>
-                                            <strong style="font-size:14px;">
-                                                Sunday:
-                                            </strong>
-                                            ${location.sundayHours || "Not Available"}
-                                        </span>
-                                    </div>
+                            </p>
 
-                                    <hr>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">📞</span>
-                                        <span>
-                                            <a href="tel:${location.phone}">
-                                                ${location.phone}
-                                            </a>
-                                        </span>
-                                    </div>
-
-                                    <div class="info-row">
-                                        <span class="info-icon">🌐</span>
-                                        <span>
-                                            <a
-                                                href="${location.website}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                Open Website
-                                            </a>
-                                        </span>
-                                    </div>
-
-                                </div>
-
-                            `;
-
-                        });
+                        `;
 
                     }
 
@@ -1045,41 +1274,85 @@
                 },
 
 
+                // =====================================================
+                // LOCATION ERROR
+                // =====================================================
+
                 function(error) {
+
 
                     if (error.code === 1) {
 
                         resultsDiv.innerHTML = `
+
                             <p class="error">
-                                📍 Location permission was denied.
-                                Please allow location access and try again.
+
+                                📍 Location permission
+                                was denied.
+
+                                <br><br>
+
+                                Please allow location access
+                                and try again.
+
                             </p>
+
                         `;
 
-                    } else if (error.code === 2) {
+                    }
+
+
+                    else if (error.code === 2) {
 
                         resultsDiv.innerHTML = `
+
                             <p class="error">
-                                📍 Your location could not be determined.
+
+                                📍 Your location could
+                                not be determined.
+
+                                <br><br>
+
                                 Please try again.
+
                             </p>
+
                         `;
 
-                    } else if (error.code === 3) {
+                    }
+
+
+                    else if (error.code === 3) {
 
                         resultsDiv.innerHTML = `
+
                             <p class="error">
-                                📍 Location request timed out.
+
+                                📍 Location request
+                                timed out.
+
+                                <br><br>
+
                                 Please try again.
+
                             </p>
+
                         `;
 
-                    } else {
+                    }
+
+
+                    else {
 
                         resultsDiv.innerHTML = `
+
                             <p class="error">
-                                📍 Unable to get your location.
+
+                                📍 Unable to get
+                                your location.
+
                             </p>
+
                         `;
 
                     }
@@ -1087,10 +1360,18 @@
                 },
 
 
+                // =====================================================
+                // GPS SETTINGS
+                // =====================================================
+
                 {
+
                     enableHighAccuracy: true,
+
                     timeout: 15000,
+
                     maximumAge: 0
+
                 }
 
             );
@@ -1098,54 +1379,87 @@
         }
 
 
-        // =====================================
+        // =====================================================
         // SAFETY INFORMATION
-        // =====================================
+        // =====================================================
 
         function showSafety() {
 
-            document.getElementById("results").innerHTML = `
 
-                <h3>🦺 Safety Information</h3>
+            document.getElementById(
+                "results"
+            ).innerHTML = `
+
+                <h3>
+                    🦺 Safety Information
+                </h3>
+
 
                 <div class="location safety-card">
 
-                    <p>
-                        Access the Custom Electric safety manuals and
-                        Safety Data Sheet documents below.
-                    </p>
 
                     <p>
+
+                        Access the Custom Electric
+                        safety manuals and Safety Data
+                        Sheet documents below.
+
+                    </p>
+
+
+                    <p>
+
                         <button
                             class="pdf-button"
-                            onclick="showPDF('Safety Manual- Custom Electric Aug 2026.pdf')"
+                            onclick="showPDF(
+                                'Safety Manual- Custom Electric Aug 2026.pdf'
+                            )"
                         >
+
                             📄 Safety Manual
+
                         </button>
+
                     </p>
 
+
                     <p>
+
                         <button
                             class="pdf-button"
-                            onclick="showPDF('Safety Manual Table of Contents- Custom Electric May 2025.pdf')"
+                            onclick="showPDF(
+                                'Safety Manual Table of Contents- Custom Electric May 2025.pdf'
+                            )"
                         >
+
                             📄 Safety Manual Table of Contents
+
                         </button>
+
                     </p>
 
+
                     <p>
+
                         <button
                             class="pdf-button"
-                            onclick="showPDF('SDS Sheets- Custom Electric Aug 2026.pdf')"
+                            onclick="showPDF(
+                                'SDS Sheets- Custom Electric Aug 2026.pdf'
+                            )"
                         >
+
                             📄 SDS Sheets
+
                         </button>
+
                     </p>
+
 
                     <div
                         id="pdfViewer"
                         style="margin-top:20px;"
                     ></div>
+
 
                 </div>
 
@@ -1153,6 +1467,10 @@
 
         }
 
+
+        // =====================================================
+        // OPEN PDF
+        // =====================================================
 
         function showPDF(filename) {
 
@@ -1163,8 +1481,8 @@
 
         }
 
-
     </script>
 
 </body>
+
 </html>
