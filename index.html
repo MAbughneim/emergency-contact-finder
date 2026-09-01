@@ -272,28 +272,6 @@
             color: #506070;
         }
 
-        .distance {
-            display: inline-block;
-            margin-top: 6px;
-            padding: 5px 10px;
-            background: #eaf4fb;
-            color: #0078D4;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .closest-badge {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 5px 10px;
-            background: #198754;
-            color: white;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
         .footer {
             margin-top: 30px;
             padding-top: 20px;
@@ -472,65 +450,16 @@ if (typeof locations !== "undefined") {
 
 
 /* =====================================================
-   USER LOCATION
+   CURRENT USER LOCATION
 ===================================================== */
 
 let userLocation = null;
 
 
 /* =====================================================
-   DISTANCE CALCULATOR
-   Uses latitude + longitude from locations.js
-===================================================== */
-
-function calculateDistance(
-    userLat,
-    userLon,
-    locationLat,
-    locationLon
-) {
-
-    const earthRadius = 3958.8; // miles
-
-    const lat1 =
-        userLat * Math.PI / 180;
-
-    const lat2 =
-        locationLat * Math.PI / 180;
-
-    const deltaLat =
-        (locationLat - userLat) * Math.PI / 180;
-
-    const deltaLon =
-        (locationLon - userLon) * Math.PI / 180;
-
-
-    const a =
-        Math.sin(deltaLat / 2) *
-        Math.sin(deltaLat / 2) +
-
-        Math.cos(lat1) *
-        Math.cos(lat2) *
-
-        Math.sin(deltaLon / 2) *
-        Math.sin(deltaLon / 2);
-
-
-    const c =
-        2 * Math.atan2(
-            Math.sqrt(a),
-            Math.sqrt(1 - a)
-        );
-
-
-    return earthRadius * c;
-
-}
-
-
-/* =====================================================
    GOOGLE MAPS LINK
-   Destination uses the REAL ADDRESS
+   Uses the user's GPS position as the starting point
+   and the actual location ADDRESS as destination.
 ===================================================== */
 
 function googleMapsLink(location) {
@@ -553,7 +482,8 @@ function googleMapsLink(location) {
 
 /* =====================================================
    APPLE MAPS LINK
-   Destination uses the REAL ADDRESS
+   Uses the user's GPS position as the starting point
+   and the actual location ADDRESS as destination.
 ===================================================== */
 
 function appleMapsLink(location) {
@@ -576,40 +506,10 @@ function appleMapsLink(location) {
 
 /* =====================================================
    CREATE LOCATION CARD
+   Used by the town selector.
 ===================================================== */
 
 function createLocationCard(location) {
-
-    let distanceHTML = "";
-
-
-    if (
-        userLocation &&
-        typeof location.latitude === "number" &&
-        typeof location.longitude === "number"
-    ) {
-
-        const distance =
-            calculateDistance(
-                userLocation.lat,
-                userLocation.lon,
-                location.latitude,
-                location.longitude
-            );
-
-
-        distanceHTML = `
-
-            <div class="distance">
-
-                📍 ${distance.toFixed(1)} miles away
-
-            </div>
-
-        `;
-
-    }
-
 
     return `
 
@@ -620,7 +520,190 @@ function createLocationCard(location) {
             </strong>
 
 
-            ${distanceHTML}
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🏥
+                </span>
+
+                <span>
+                    ${location.type}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    📍
+                </span>
+
+                <div>
+
+                    <strong style="font-size:14px;">
+                        ${location.address}
+                    </strong>
+
+
+                    <br><br>
+
+
+                    <a
+                        href="${googleMapsLink(location)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🗺️ Google Maps
+                    </a>
+
+                    &nbsp; | &nbsp;
+
+                    <a
+                        href="${appleMapsLink(location)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🍎 Apple Maps
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Mon-Fri:
+                    </strong>
+
+                    ${location.weekdayHours || "Not Available"}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Saturday:
+                    </strong>
+
+                    ${location.saturdayHours || "Not Available"}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Sunday:
+                    </strong>
+
+                    ${location.sundayHours || "Not Available"}
+
+                </span>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    📞
+                </span>
+
+                <span>
+
+                    <a href="tel:${location.phone}">
+                        ${location.phone}
+                    </a>
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🌐
+                </span>
+
+                <span>
+
+                    <a
+                        href="${location.website}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open Website
+                    </a>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   CREATE LOCATION CARD WITH DISTANCE
+   Used by "Use My Location".
+===================================================== */
+
+function createLocationCardWithDistance(location) {
+
+    return `
+
+        <div class="location">
+
+            <strong>
+                ${location.name}
+            </strong>
+
+
+            <div
+                style="
+                    color:#198754;
+                    font-weight:700;
+                    margin:8px 0 15px;
+                "
+            >
+                📍 ${location.distance.toFixed(1)} miles away
+            </div>
 
 
             <div class="info-row">
@@ -784,7 +867,8 @@ function createLocationCard(location) {
 
 /* =====================================================
    TOWN SELECTED
-   Keeps the existing town behavior
+   This continues to show all locations in the
+   selected town, exactly as before.
 ===================================================== */
 
 townSelect.addEventListener("change", function() {
@@ -837,10 +921,9 @@ townSelect.addEventListener("change", function() {
 
 /* =====================================================
    USE MY LOCATION
-   NEW BEHAVIOR:
-   1. Get user's GPS location
-   2. Calculate distance to every location
-   3. Sort nearest → farthest
+   Finds ONLY:
+   - 2 closest Urgent Care locations
+   - 2 closest Emergency Rooms
 ===================================================== */
 
 function getLocation() {
@@ -876,7 +959,7 @@ function getLocation() {
             </h3>
 
             <p>
-                Finding the closest emergency locations...
+                Finding the closest medical locations...
             </p>
 
         </div>
@@ -888,10 +971,9 @@ function getLocation() {
 
         function(position) {
 
-            /*
-             * Get the REAL GPS coordinates
-             * of the user.
-             */
+            /* -----------------------------------------
+               GET ACTUAL GPS LOCATION
+            ----------------------------------------- */
 
             userLocation = {
 
@@ -902,53 +984,141 @@ function getLocation() {
             };
 
 
-            /*
-             * Add calculated distance to
-             * every location.
-             */
+            /* -----------------------------------------
+               HAVERSINE DISTANCE CALCULATION
+               Returns distance in miles.
+            ----------------------------------------- */
+
+            function calculateDistance(
+                lat1,
+                lon1,
+                lat2,
+                lon2
+            ) {
+
+                const earthRadius =
+                    3958.8;
+
+
+                const lat1Rad =
+                    lat1 * Math.PI / 180;
+
+                const lat2Rad =
+                    lat2 * Math.PI / 180;
+
+
+                const deltaLat =
+                    (lat2 - lat1) * Math.PI / 180;
+
+                const deltaLon =
+                    (lon2 - lon1) * Math.PI / 180;
+
+
+                const a =
+                    Math.sin(deltaLat / 2) *
+                    Math.sin(deltaLat / 2) +
+
+                    Math.cos(lat1Rad) *
+                    Math.cos(lat2Rad) *
+
+                    Math.sin(deltaLon / 2) *
+                    Math.sin(deltaLon / 2);
+
+
+                const c =
+                    2 * Math.atan2(
+                        Math.sqrt(a),
+                        Math.sqrt(1 - a)
+                    );
+
+
+                return earthRadius * c;
+
+            }
+
+
+            /* -----------------------------------------
+               CALCULATE DISTANCE FOR EVERY LOCATION
+            ----------------------------------------- */
 
             const locationsWithDistance =
                 locations.map(function(location) {
 
-                    const distance =
-                        calculateDistance(
-                            userLocation.lat,
-                            userLocation.lon,
-                            location.latitude,
-                            location.longitude
-                        );
-
-
                     return {
 
-                        location: location,
+                        ...location,
 
-                        distance: distance
+                        distance:
+                            calculateDistance(
+                                userLocation.lat,
+                                userLocation.lon,
+                                location.latitude,
+                                location.longitude
+                            )
 
                     };
 
                 });
 
 
-            /*
-             * SORT:
-             *
-             * Closest location first.
-             */
+            /* -----------------------------------------
+               FIND 2 CLOSEST URGENT CARE
+            ----------------------------------------- */
 
-            locationsWithDistance.sort(
-                function(a, b) {
+            const closestUrgentCare =
+                locationsWithDistance
+                    .filter(function(location) {
 
-                    return a.distance - b.distance;
+                        return (
+                            location.type ===
+                            "Urgent Care"
+                        );
 
-                }
-            );
+                    })
+                    .sort(function(a, b) {
 
+                        return (
+                            a.distance -
+                            b.distance
+                        );
+
+                    })
+                    .slice(0, 2);
+
+
+            /* -----------------------------------------
+               FIND 2 CLOSEST EMERGENCY ROOMS
+            ----------------------------------------- */
+
+            const closestEmergencyRooms =
+                locationsWithDistance
+                    .filter(function(location) {
+
+                        return (
+                            location.type ===
+                            "Emergency Room"
+                        );
+
+                    })
+                    .sort(function(a, b) {
+
+                        return (
+                            a.distance -
+                            b.distance
+                        );
+
+                    })
+                    .slice(0, 2);
+
+
+            /* -----------------------------------------
+               BUILD RESULTS
+            ----------------------------------------- */
 
             let html = `
 
                 <h3>
-                    📍 Emergency Locations Near You
+                    📍 Closest Medical Locations
                 </h3>
 
                 <p
@@ -958,229 +1128,83 @@ function getLocation() {
                         margin-bottom:25px;
                     "
                 >
-                    Locations are sorted from closest
-                    to farthest from your current location.
+                    Based on your current GPS location.
                 </p>
 
             `;
 
 
-            /*
-             * Show every location in distance order.
-             */
+            /* -----------------------------------------
+               SHOW 2 CLOSEST URGENT CARE
+            ----------------------------------------- */
 
-            locationsWithDistance.forEach(
-                function(item, index) {
+            if (
+                closestUrgentCare.length > 0
+            ) {
 
-                    const location =
-                        item.location;
+                html += `
 
+                    <h4>
+                        Urgent Care
+                    </h4>
 
-                    /*
-                     * Add the "Closest" badge
-                     * to the first result.
-                     */
-
-                    let closestBadge = "";
+                `;
 
 
-                    if (index === 0) {
+                closestUrgentCare.forEach(
+                    function(location) {
 
-                        closestBadge = `
-
-                            <div class="closest-badge">
-                                ⭐ Closest Location
-                            </div>
-
-                        `;
+                        html +=
+                            createLocationCardWithDistance(
+                                location
+                            );
 
                     }
+                );
 
+            }
 
-                    html += `
 
-                        <div class="location">
+            /* -----------------------------------------
+               SHOW 2 CLOSEST EMERGENCY ROOMS
+            ----------------------------------------- */
 
-                            <strong>
-                                ${location.name}
-                            </strong>
+            if (
+                closestEmergencyRooms.length > 0
+            ) {
 
+                html += `
 
-                            <div class="distance">
+                    <h4>
+                        Emergency Rooms
+                    </h4>
 
-                                📍 ${item.distance.toFixed(1)}
-                                miles away
+                `;
 
-                            </div>
 
+                closestEmergencyRooms.forEach(
+                    function(location) {
 
-                            ${closestBadge}
+                        html +=
+                            createLocationCardWithDistance(
+                                location
+                            );
 
+                    }
+                );
 
-                            <div class="info-row">
+            }
 
-                                <span class="info-icon">
-                                    🏥
-                                </span>
 
-                                <span>
-                                    ${location.type}
-                                </span>
-
-                            </div>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    📍
-                                </span>
-
-                                <div>
-
-                                    <strong style="font-size:14px;">
-                                        ${location.address}
-                                    </strong>
-
-
-                                    <br><br>
-
-
-                                    <a
-                                        href="${googleMapsLink(location)}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        🗺️ Google Maps
-                                    </a>
-
-                                    &nbsp; | &nbsp;
-
-                                    <a
-                                        href="${appleMapsLink(location)}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        🍎 Apple Maps
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-
-                            <hr>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    🕒
-                                </span>
-
-                                <span>
-
-                                    <strong style="font-size:14px;">
-                                        Mon-Fri:
-                                    </strong>
-
-                                    ${location.weekdayHours || "Not Available"}
-
-                                </span>
-
-                            </div>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    🕒
-                                </span>
-
-                                <span>
-
-                                    <strong style="font-size:14px;">
-                                        Saturday:
-                                    </strong>
-
-                                    ${location.saturdayHours || "Not Available"}
-
-                                </span>
-
-                            </div>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    🕒
-                                </span>
-
-                                <span>
-
-                                    <strong style="font-size:14px;">
-                                        Sunday:
-                                    </strong>
-
-                                    ${location.sundayHours || "Not Available"}
-
-                                </span>
-
-                            </div>
-
-
-                            <hr>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    📞
-                                </span>
-
-                                <span>
-
-                                    <a href="tel:${location.phone}">
-                                        ${location.phone}
-                                    </a>
-
-                                </span>
-
-                            </div>
-
-
-                            <div class="info-row">
-
-                                <span class="info-icon">
-                                    🌐
-                                </span>
-
-                                <span>
-
-                                    <a
-                                        href="${location.website}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Open Website
-                                    </a>
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-
-            resultsDiv.innerHTML = html;
+            resultsDiv.innerHTML =
+                html;
 
         },
 
+
+        /* ---------------------------------------------
+           LOCATION ERROR
+        --------------------------------------------- */
 
         function(error) {
 
@@ -1245,6 +1269,10 @@ function getLocation() {
 
         },
 
+
+        /* ---------------------------------------------
+           GPS OPTIONS
+        --------------------------------------------- */
 
         {
             enableHighAccuracy: true,
