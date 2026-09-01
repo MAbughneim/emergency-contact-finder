@@ -1,709 +1,1043 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Nearby Urgent Care & Emergency Rooms</title>
+    <title>Medical Emergency Information</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
-        }
-
-        header {
-            background: #0b5ed7;
-            color: white;
-            padding: 24px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 0 0 8px;
-            font-size: 28px;
-        }
-
-        header p {
-            margin: 0;
-            opacity: 0.95;
-        }
-
-        main {
             max-width: 900px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        button {
-            border: none;
-            border-radius: 8px;
-            padding: 13px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            background: #0b5ed7;
-        }
-
-        button:hover {
-            background: #084db2;
-        }
-
-        button.emergency {
-            background: #dc3545;
-        }
-
-        button.emergency:hover {
-            background: #b02a37;
-        }
-
-        button.urgent {
-            background: #198754;
-        }
-
-        button.urgent:hover {
-            background: #146c43;
-        }
-
-        .status {
+            margin: 0 auto;
+            padding: 30px 20px 50px;
             text-align: center;
-            margin: 15px 0;
-            color: #555;
-            min-height: 24px;
+            background: linear-gradient(
+                135deg,
+                #eef6ff 0%,
+                #f8fbff 50%,
+                #eef8f4 100%
+            );
+            color: #222;
+            min-height: 100vh;
         }
 
-        .location-card {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-            display: none;
+        .page-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 12px 40px rgba(0, 65, 120, 0.12);
+            border: 1px solid rgba(0, 120, 212, 0.08);
         }
 
-        .location-card.show {
-            display: block;
+        .header {
+            margin-bottom: 30px;
         }
 
-        .location-type {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            background: #e7f1ff;
-            color: #0b5ed7;
+        .header-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e63946, #c1121f);
+            color: white;
+            border-radius: 50%;
+            font-size: 36px;
+            box-shadow: 0 8px 20px rgba(198, 18, 31, 0.25);
         }
 
-        .location-type.emergency {
-            background: #fde8ea;
-            color: #dc3545;
+        h1 {
+            color: #16324f;
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.15;
+            font-weight: 800;
         }
 
-        .location-type.urgent {
-            background: #e8f7ef;
-            color: #198754;
+        h2 {
+            color: #506070;
+            margin: 0;
+            font-size: 19px;
+            font-weight: 500;
         }
 
-        .location-card h2 {
-            margin: 5px 0 15px;
+        h3 {
+            color: #16324f;
+            margin: 30px 0 18px;
             font-size: 24px;
         }
 
-        .info {
+        h4 {
+            color: #0078D4;
+            margin: 25px 0 12px;
+            font-size: 19px;
+            text-align: left;
+        }
+
+        p {
+            color: #5b6875;
+            line-height: 1.6;
+        }
+
+        .intro-text {
+            background: #f3f8fc;
+            border-left: 4px solid #0078D4;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px 16px;
             margin: 10px 0;
+            border: 1px solid #cbd7e2;
+            border-radius: 10px;
+            background: white;
+            font-size: 16px;
+            color: #263746;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #0078D4;
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.12);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        button {
+            background: linear-gradient(135deg, #0078D4, #005fa8);
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 5px 14px rgba(0, 120, 212, 0.22);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #006bc0, #004f8c);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(0, 120, 212, 0.28);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .location-button {
+            width: 100%;
+            max-width: 400px;
+            font-size: 17px;
+            padding: 16px 20px;
+        }
+
+        .safety-button {
+            background: linear-gradient(135deg, #198754, #126c42);
+            width: 100%;
+            max-width: 400px;
+            font-size: 17px;
+            padding: 16px 20px;
+            box-shadow: 0 5px 14px rgba(25, 135, 84, 0.22);
+        }
+
+        .safety-button:hover {
+            background: linear-gradient(135deg, #157347, #0d5834);
+        }
+
+        #results {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        #results > h3 {
+            text-align: center;
+        }
+
+        .location {
+            margin-bottom: 20px;
+            padding: 22px;
+            border: 1px solid #dce5ed;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(180deg, #0078D4, #00a6fb);
+        }
+
+        .location:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+        }
+
+        .location strong {
+            display: block;
+            font-size: 20px;
+            color: #16324f;
+            margin-bottom: 4px;
+        }
+
+        .location a {
+            color: #0078D4;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .location a:hover {
+            text-decoration: underline;
+        }
+
+        .location hr {
+            border: none;
+            border-top: 1px solid #e4e9ee;
+            margin: 16px 0;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin: 12px 0;
             line-height: 1.5;
         }
 
-        .distance {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0b5ed7;
-            margin: 15px 0;
+        .info-icon {
+            min-width: 24px;
         }
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .safety-card::before {
+            background: linear-gradient(180deg, #198754, #20a866);
         }
 
-        .actions a {
-            text-decoration: none;
-            padding: 11px 16px;
-            border-radius: 7px;
-            font-weight: bold;
-            color: white;
-            background: #0b5ed7;
+        .pdf-button {
+            background: #f4f8fb;
+            color: #16324f;
+            border: 1px solid #d6e1ea;
+            box-shadow: none;
+            text-align: left;
+            width: 100%;
         }
 
-        .actions a.phone {
-            background: #198754;
-        }
-
-        .actions a.website {
-            background: #6f42c1;
+        .pdf-button:hover {
+            background: #eaf4fb;
+            color: #0078D4;
+            border-color: #b9d8ee;
         }
 
         .error {
-            color: #dc3545;
+            color: #b42318;
             font-weight: bold;
-            text-align: center;
-        }
-
-        .all-locations {
-            margin-top: 35px;
-        }
-
-        .all-locations h2 {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .location-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .location-item {
-            background: white;
-            padding: 16px;
+            background: #fff1f0;
+            border: 1px solid #f5c2c0;
+            border-left: 5px solid #dc3545;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 16px;
         }
 
-        .location-item strong {
-            display: block;
-            margin-bottom: 5px;
+        .loading {
+            text-align: center;
+            padding: 25px;
+            background: #f4f9fd;
+            border-radius: 12px;
+            color: #506070;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8ee;
+            color: #7a8793;
+            font-size: 13px;
         }
 
         @media (max-width: 600px) {
-            header h1 {
-                font-size: 23px;
+
+            body {
+                padding: 15px 10px 30px;
             }
 
-            .controls {
-                flex-direction: column;
+            .page-container {
+                padding: 22px 16px;
+                border-radius: 16px;
             }
 
-            button {
-                width: 100%;
+            h1 {
+                font-size: 29px;
             }
 
-            .location-card {
-                padding: 20px;
+            h2 {
+                font-size: 17px;
+            }
+
+            .header-icon {
+                width: 62px;
+                height: 62px;
+                font-size: 30px;
+            }
+
+            .location {
+                padding: 18px;
+            }
+
+            .location strong {
+                font-size: 18px;
             }
         }
+
     </style>
 </head>
 
+
 <body>
 
-<header>
-    <h1>Nearby Urgent Care & Emergency Rooms</h1>
-    <p>Find the closest medical location using your GPS location.</p>
-</header>
+<div class="page-container">
 
-<main>
+    <div class="header">
 
-    <div class="controls">
-        <button onclick="getUserLocation()">
-            📍 Find Closest Location
+        <div class="header-icon">
+            🚨
+        </div>
+
+        <h1>
+            Custom Electric Emergency & Safety Information
+        </h1>
+
+        <h2>
+            Medical Facilities, Safety Resources & SDS Documents
+        </h2>
+
+    </div>
+
+
+    <div id="mainSection">
+
+        <div class="intro-text">
+
+            <p>
+                <strong>📍 Find emergency resources near you</strong><br>
+                Use your location or select a town below.
+            </p>
+
+        </div>
+
+
+        <button
+            class="location-button"
+            onclick="getLocation()"
+        >
+            📍 Use My Location
         </button>
 
-        <button class="urgent" onclick="getUserLocation('Urgent Care')">
-            🩺 Closest Urgent Care
+
+        <br><br>
+
+
+        <select id="townSelect">
+
+            <option value="">
+                Select Town
+            </option>
+
+        </select>
+
+
+        <br><br>
+
+
+        <button
+            class="safety-button"
+            onclick="showSafety()"
+        >
+            🦺 Safety Information
         </button>
 
-        <button class="emergency" onclick="getUserLocation('Emergency Room')">
-            🚨 Closest Emergency Room
-        </button>
-    </div>
 
-    <div id="status" class="status">
-        Click a button above to find a nearby location.
-    </div>
+        <br><br>
 
-    <div id="location-card" class="location-card">
 
-        <div id="location-type" class="location-type"></div>
-
-        <h2 id="location-name"></h2>
-
-        <div id="location-address" class="info"></div>
-
-        <div id="location-phone" class="info"></div>
-
-        <div id="location-distance" class="distance"></div>
-
-        <div class="info">
-            <strong>Weekdays:</strong>
-            <span id="weekday-hours"></span>
-        </div>
-
-        <div class="info">
-            <strong>Saturday:</strong>
-            <span id="saturday-hours"></span>
-        </div>
-
-        <div class="info">
-            <strong>Sunday:</strong>
-            <span id="sunday-hours"></span>
-        </div>
-
-        <div class="actions">
-
-            <a
-                id="directions-link"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer">
-                🗺️ Get Directions
-            </a>
-
-            <a
-                id="phone-link"
-                class="phone"
-                href="#">
-                📞 Call
-            </a>
-
-            <a
-                id="website-link"
-                class="website"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer">
-                🌐 Website
-            </a>
-
-        </div>
+        <div id="results"></div>
 
     </div>
 
 
-    <div class="all-locations">
-
-        <h2>All Locations</h2>
-
-        <div id="location-list" class="location-list"></div>
-
+    <div class="footer">
+        Custom Electric • Emergency & Safety Information
     </div>
 
-</main>
+</div>
 
 
-<script type="module">
-
-    import locations from "./locations.js";
+<script src="locations.js"></script>
 
 
-    // ==========================================
-    // DISTANCE CALCULATION
-    // ==========================================
+<script>
 
-    function getDistanceInMiles(lat1, lon1, lat2, lon2) {
+/* =====================================================
+   CHECK LOCATIONS
+===================================================== */
 
-        const R = 3958.8;
+if (typeof locations === "undefined") {
 
-        const dLat =
-            (lat2 - lat1) * Math.PI / 180;
+    document.getElementById("results").innerHTML =
+        "<p class='error'>ERROR: locations.js was not loaded.</p>";
 
-        const dLon =
-            (lon2 - lon1) * Math.PI / 180;
+}
 
-        const a =
-            Math.sin(dLat / 2) ** 2 +
-            Math.cos(lat1 * Math.PI / 180) *
-            Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon / 2) ** 2;
 
-        const c =
-            2 * Math.atan2(
-                Math.sqrt(a),
-                Math.sqrt(1 - a)
-            );
+/* =====================================================
+   TOWN DROPDOWN
+===================================================== */
 
-        return R * c;
+const townSelect =
+    document.getElementById("townSelect");
+
+
+if (typeof locations !== "undefined") {
+
+    const towns = [
+        ...new Set(
+            locations.map(function(location) {
+                return location.town;
+            })
+        )
+    ].sort();
+
+
+    towns.forEach(function(town) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = town;
+
+        option.textContent = town;
+
+        townSelect.appendChild(option);
+
+    });
+
+}
+
+
+/* =====================================================
+   CURRENT USER LOCATION
+   This is ONLY used as the starting point.
+   We DO NOT use stored coordinates for hospitals.
+===================================================== */
+
+let userLocation = null;
+
+
+/* =====================================================
+   CREATE GOOGLE MAPS LINK
+===================================================== */
+
+function googleMapsLink(location) {
+
+    const destination =
+        encodeURIComponent(location.address);
+
+
+    if (userLocation) {
+
+        return `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lon}&destination=${destination}&travelmode=driving`;
+
     }
 
 
-    // ==========================================
-    // FIND CLOSEST LOCATION
-    // ==========================================
+    return `https://www.google.com/maps/search/?api=1&query=${destination}`;
 
-    function findClosestLocation(
-        userLat,
-        userLon,
-        type = null
-    ) {
+}
 
-        let availableLocations = [...locations];
 
-        if (type) {
+/* =====================================================
+   CREATE APPLE MAPS LINK
+===================================================== */
 
-            availableLocations =
-                availableLocations.filter(
-                    location =>
-                        location.type === type
-                );
-        }
+function appleMapsLink(location) {
 
-        if (availableLocations.length === 0) {
-            return null;
-        }
+    const destination =
+        encodeURIComponent(location.address);
 
-        const locationsWithDistance =
-            availableLocations.map(location => {
 
-                const distance =
-                    getDistanceInMiles(
-                        userLat,
-                        userLon,
-                        location.latitude,
-                        location.longitude
-                    );
+    if (userLocation) {
 
-                return {
-                    ...location,
-                    distance
-                };
+        return `https://maps.apple.com/?saddr=${userLocation.lat},${userLocation.lon}&daddr=${destination}&dirflg=d`;
 
-            });
-
-        locationsWithDistance.sort(
-            (a, b) =>
-                a.distance - b.distance
-        );
-
-        return locationsWithDistance[0];
     }
 
 
-    // ==========================================
-    // DISPLAY LOCATION
-    // ==========================================
+    return `https://maps.apple.com/?address=${destination}`;
 
-    function displayClosestLocation(location) {
-
-        const card =
-            document.getElementById(
-                "location-card"
-            );
-
-        const typeElement =
-            document.getElementById(
-                "location-type"
-            );
-
-        const nameElement =
-            document.getElementById(
-                "location-name"
-            );
-
-        const addressElement =
-            document.getElementById(
-                "location-address"
-            );
-
-        const phoneElement =
-            document.getElementById(
-                "location-phone"
-            );
-
-        const distanceElement =
-            document.getElementById(
-                "location-distance"
-            );
-
-        const weekdayElement =
-            document.getElementById(
-                "weekday-hours"
-            );
-
-        const saturdayElement =
-            document.getElementById(
-                "saturday-hours"
-            );
-
-        const sundayElement =
-            document.getElementById(
-                "sunday-hours"
-            );
-
-        const directionsLink =
-            document.getElementById(
-                "directions-link"
-            );
-
-        const phoneLink =
-            document.getElementById(
-                "phone-link"
-            );
-
-        const websiteLink =
-            document.getElementById(
-                "website-link"
-            );
+}
 
 
-        typeElement.textContent =
-            location.type;
+/* =====================================================
+   CREATE LOCATION CARD
+===================================================== */
 
-        typeElement.className =
-            "location-type " +
-            (
-                location.type === "Emergency Room"
-                    ? "emergency"
-                    : "urgent"
-            );
+function createLocationCard(location) {
 
+    return `
 
-        nameElement.textContent =
-            location.name;
+        <div class="location">
 
-
-        addressElement.textContent =
-            "📍 " + location.address;
+            <strong>
+                ${location.name}
+            </strong>
 
 
-        phoneElement.textContent =
-            "📞 " + location.phone;
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🏥
+                </span>
+
+                <span>
+                    ${location.type}
+                </span>
+
+            </div>
 
 
-        distanceElement.textContent =
-            "📏 " +
-            location.distance.toFixed(2) +
-            " miles away";
+            <div class="info-row">
+
+                <span class="info-icon">
+                    📍
+                </span>
+
+                <div>
+
+                    <strong style="font-size:14px;">
+                        ${location.address}
+                    </strong>
 
 
-        weekdayElement.textContent =
-            location.weekdayHours;
+                    <br><br>
 
 
-        saturdayElement.textContent =
-            location.saturdayHours;
+                    <a
+                        href="${googleMapsLink(location)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🗺️ Google Maps
+                    </a>
+
+                    &nbsp; | &nbsp;
+
+                    <a
+                        href="${appleMapsLink(location)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🍎 Apple Maps
+                    </a>
+
+                </div>
+
+            </div>
 
 
-        sundayElement.textContent =
-            location.sundayHours;
+            <hr>
 
 
-        // Google Maps directions
-        directionsLink.href =
-            `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                location.address
-            )}`;
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Mon-Fri:
+                    </strong>
+
+                    ${location.weekdayHours || "Not Available"}
+
+                </span>
+
+            </div>
 
 
-        // Phone
-        phoneLink.href =
-            `tel:${location.phone.replace(/[^0-9+]/g, "")}`;
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Saturday:
+                    </strong>
+
+                    ${location.saturdayHours || "Not Available"}
+
+                </span>
+
+            </div>
 
 
-        // Website
-        websiteLink.href =
-            location.website;
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🕒
+                </span>
+
+                <span>
+
+                    <strong style="font-size:14px;">
+                        Sunday:
+                    </strong>
+
+                    ${location.sundayHours || "Not Available"}
+
+                </span>
+
+            </div>
 
 
-        card.classList.add("show");
+            <hr>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    📞
+                </span>
+
+                <span>
+
+                    <a href="tel:${location.phone}">
+                        ${location.phone}
+                    </a>
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-icon">
+                    🌐
+                </span>
+
+                <span>
+
+                    <a
+                        href="${location.website}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open Website
+                    </a>
+
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   TOWN SELECTED
+===================================================== */
+
+townSelect.addEventListener("change", function() {
+
+    const selectedTown =
+        this.value;
+
+    const results =
+        document.getElementById("results");
+
+
+    if (selectedTown === "") {
+
+        results.innerHTML = "";
+
+        return;
+
     }
 
 
-    // ==========================================
-    // GET USER GPS LOCATION
-    // ==========================================
+    const townLocations =
+        locations.filter(function(location) {
 
-    function getUserLocation(type = null) {
+            return location.town.toLowerCase() ===
+                   selectedTown.toLowerCase();
 
-        const status =
-            document.getElementById(
-                "status"
-            );
-
-        status.textContent =
-            "📍 Getting your location...";
+        });
 
 
-        if (!navigator.geolocation) {
+    let html = `
 
-            status.innerHTML =
-                '<span class="error">' +
-                'Geolocation is not supported by your browser.' +
-                '</span>';
+        <h3>
+            📍 Locations in ${selectedTown}
+        </h3>
 
-            return;
-        }
+    `;
 
 
-        navigator.geolocation.getCurrentPosition(
+    townLocations.forEach(function(location) {
 
-            function(position) {
+        html += createLocationCard(location);
 
-                const userLat =
-                    position.coords.latitude;
-
-                const userLon =
-                    position.coords.longitude;
+    });
 
 
-                console.log(
-                    "User latitude:",
-                    userLat
-                );
+    results.innerHTML = html;
 
-                console.log(
-                    "User longitude:",
-                    userLon
-                );
+});
 
 
-                const closest =
-                    findClosestLocation(
-                        userLat,
-                        userLon,
-                        type
-                    );
+/* =====================================================
+   USE MY LOCATION
+===================================================== */
+
+function getLocation() {
+
+    const resultsDiv =
+        document.getElementById("results");
 
 
-                if (!closest) {
+    if (!navigator.geolocation) {
 
-                    status.innerHTML =
-                        '<span class="error">' +
-                        'No matching locations found.' +
-                        '</span>';
+        resultsDiv.innerHTML = `
 
-                    return;
-                }
+            <p class="error">
 
+                📍 Your browser does not support
+                location services.
 
-                displayClosestLocation(
-                    closest
-                );
+            </p>
 
+        `;
 
-                status.textContent =
-                    "✅ Closest location found.";
+        return;
 
-
-                console.log(
-                    "Closest:",
-                    closest.name
-                );
-
-                console.log(
-                    "Distance:",
-                    closest.distance.toFixed(2),
-                    "miles"
-                );
-
-            },
-
-
-            function(error) {
-
-                let message =
-                    "Unable to get your location.";
-
-                if (error.code === 1) {
-                    message =
-                        "Location permission was denied. Please allow location access.";
-                }
-
-                if (error.code === 2) {
-                    message =
-                        "Your location could not be determined.";
-                }
-
-                if (error.code === 3) {
-                    message =
-                        "Location request timed out.";
-                }
-
-
-                status.innerHTML =
-                    '<span class="error">' +
-                    message +
-                    '</span>';
-
-                console.error(
-                    "Geolocation error:",
-                    error
-                );
-            },
-
-
-            {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            }
-        );
     }
 
 
-    // ==========================================
-    // SHOW ALL LOCATIONS
-    // ==========================================
+    resultsDiv.innerHTML = `
 
-    function displayAllLocations() {
+        <div class="loading">
 
-        const list =
-            document.getElementById(
-                "location-list"
-            );
+            <h3>
+                📍 Getting your location...
+            </h3>
 
-        list.innerHTML = "";
+            <p>
+                Please wait...
+            </p>
 
+        </div>
 
-        locations.forEach(location => {
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "location-item";
+    `;
 
 
-            item.innerHTML = `
-                <strong>${location.name}</strong>
-                <span>${location.type}</span><br>
-                <span>📍 ${location.address}</span><br>
-                <span>📞 ${location.phone}</span>
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            /*
+             * IMPORTANT:
+             *
+             * We use the user's coordinates ONLY
+             * as the starting point for directions.
+             *
+             * Hospital/urgent-care destinations
+             * are now based on ADDRESS.
+             */
+
+
+            userLocation = {
+
+                lat: position.coords.latitude,
+
+                lon: position.coords.longitude
+
+            };
+
+
+            let html = `
+
+                <h3>
+                    📍 Emergency Locations Near You
+                </h3>
+
+                <p
+                    style="
+                        text-align:center;
+                        color:#5b6875;
+                        margin-bottom:25px;
+                    "
+                >
+                    Select Google Maps or Apple Maps
+                    to get directions from your current location.
+                </p>
+
             `;
 
 
-            list.appendChild(item);
-        });
-    }
+            /* ==============================
+               URGENT CARE
+            ============================== */
+
+            const urgentCares =
+                locations.filter(function(location) {
+
+                    return location.type === "Urgent Care";
+
+                });
 
 
-    // ==========================================
-    // INITIALIZE
-    // ==========================================
+            if (urgentCares.length > 0) {
 
-    displayAllLocations();
+                html += "<h4>Urgent Care</h4>";
 
 
-    // Make function available to buttons
-    window.getUserLocation =
-        getUserLocation;
+                urgentCares.forEach(function(location) {
+
+                    html += createLocationCard(location);
+
+                });
+
+            }
+
+
+            /* ==============================
+               EMERGENCY ROOMS
+            ============================== */
+
+            const emergencyRooms =
+                locations.filter(function(location) {
+
+                    return location.type === "Emergency Room";
+
+                });
+
+
+            if (emergencyRooms.length > 0) {
+
+                html += "<h4>Emergency Rooms</h4>";
+
+
+                emergencyRooms.forEach(function(location) {
+
+                    html += createLocationCard(location);
+
+                });
+
+            }
+
+
+            resultsDiv.innerHTML = html;
+
+        },
+
+
+        function(error) {
+
+            if (error.code === 1) {
+
+                resultsDiv.innerHTML = `
+
+                    <p class="error">
+
+                        📍 Location permission was denied.
+                        Please allow location access and try again.
+
+                    </p>
+
+                `;
+
+            }
+
+            else if (error.code === 2) {
+
+                resultsDiv.innerHTML = `
+
+                    <p class="error">
+
+                        📍 Your location could not be determined.
+                        Please try again.
+
+                    </p>
+
+                `;
+
+            }
+
+            else if (error.code === 3) {
+
+                resultsDiv.innerHTML = `
+
+                    <p class="error">
+
+                        📍 Location request timed out.
+                        Please try again.
+
+                    </p>
+
+                `;
+
+            }
+
+            else {
+
+                resultsDiv.innerHTML = `
+
+                    <p class="error">
+
+                        📍 Unable to get your location.
+
+                    </p>
+
+                `;
+
+            }
+
+        },
+
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   SAFETY INFORMATION
+===================================================== */
+
+function showSafety() {
+
+    document.getElementById("results").innerHTML = `
+
+        <h3>
+            🦺 Safety Information
+        </h3>
+
+
+        <div class="location safety-card">
+
+            <p>
+
+                Access the Custom Electric safety manuals
+                and Safety Data Sheet documents below.
+
+            </p>
+
+
+            <p>
+
+                <button
+                    class="pdf-button"
+                    onclick="showPDF('Safety Manual- Custom Electric Aug 2026.pdf')"
+                >
+
+                    📄 Safety Manual
+
+                </button>
+
+            </p>
+
+
+            <p>
+
+                <button
+                    class="pdf-button"
+                    onclick="showPDF('Safety Manual Table of Contents- Custom Electric May 2025.pdf')"
+                >
+
+                    📄 Safety Manual Table of Contents
+
+                </button>
+
+            </p>
+
+
+            <p>
+
+                <button
+                    class="pdf-button"
+                    onclick="showPDF('SDS Sheets- Custom Electric Aug 2026.pdf')"
+                >
+
+                    📄 SDS Sheets
+
+                </button>
+
+            </p>
+
+
+            <div
+                id="pdfViewer"
+                style="margin-top:20px;"
+            ></div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   OPEN PDF
+===================================================== */
+
+function showPDF(filename) {
+
+    window.open(
+        `./safety/${filename}`,
+        "_blank"
+    );
+
+}
 
 </script>
 
