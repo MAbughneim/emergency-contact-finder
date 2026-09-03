@@ -1196,11 +1196,16 @@ function getLocation() {
             }
 
 
-            resultsDiv.innerHTML =
-                html;
+                 resultsDiv.innerHTML = html;
+
+            setTimeout(function () {
+                resultsDiv.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 100);
 
         },
-
 
         /* ---------------------------------------------
            LOCATION ERROR
